@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/data/local/constans/constans.dart';
 
-import 'package:dashborad/data/models/adminModel.dart';
 import 'package:dashborad/data/models/articlesModel.dart';
 import 'package:dashborad/data/models/iconsModel.dart';
 import 'package:dashborad/data/models/tagsModel.dart';
@@ -53,9 +52,9 @@ class AdminCubit extends Cubit<AdminState> {
         postsCount: postsCount,
       );
       FirebaseFirestore.instance
-          .collection('users')
+          .collection('admins')
           .doc(uid)
-          .set(model.toMap());
+          .set(model.toJson());
       emit(AdminCreateSuccessState());
     } on FirebaseException catch (e) {
       print(e.message);
@@ -97,7 +96,7 @@ class AdminCubit extends Cubit<AdminState> {
       emit(AdminGetUserLoadingState());
       DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
           .instance
-          .collection("users")
+          .collection("admins")
           .doc(uid.toString())
           .get();
       if (snapshot.exists) {

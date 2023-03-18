@@ -1,32 +1,25 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'iconsModel.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class IconsModel {
-  String? title;
-  String? iId;
-  String? image;
-  String? uid;
-  Map<String, dynamic>? posts;
-  IconsModel({
-    this.title,
-    this.iId,
-    this.image,
-    this.posts,
-    this.uid,
-  });
+  final String id;
+  final String iconUrl;
+  final String? iconTitle;
+  final int articleCount;
+  final String? aId;
 
-  IconsModel.fromJson(Map<String, dynamic>? json) {
-    title = json?['title'];
-    iId = json?['iId'];
-    image = json?['image'];
-    posts = json?['posts'];
-    uid = json?['uid'];
-  }
+  IconsModel(
+    this.id,
+    this.iconUrl,
+    this.iconTitle,
+    this.articleCount,
+    this.aId,
+  );
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'iId': iId,
-      'image': image,
-      'posts': posts,
-      'uid': uid,
-    };
-  }
+  factory IconsModel.fromJson(Map<String, dynamic> json) =>
+      _$IconsModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$IconsModelToJson(this);
 }

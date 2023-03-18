@@ -8,6 +8,7 @@ import 'package:dashborad/firebase_options.dart';
 import 'package:dashborad/presentation/screens/homeScreen.dart';
 import 'package:dashborad/presentation/screens/login_screen.dart';
 import 'package:dashborad/presentation/theams.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,9 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<DashboardCubit>(
-          create: (context) => DashboardCubit()..init(),
-        ),
         BlocProvider<AdminCubit>(
           create: (context) => AdminCubit()..getAllUsers(),
         ),
@@ -42,6 +40,15 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<TagsCubit>(
           create: (context) => TagsCubit()..getAllTagsData(),
+        ),
+        BlocProvider<DashboardCubit>(
+          create: (context) => DashboardCubit(
+            adminCubit: context.read<AdminCubit>(),
+            iconsCubit: context.read<IconsCubit>(),
+            tagsCubit: context.read<TagsCubit>(),
+            articlesCubit: context.read<ArticlestCubit>(),
+            uid: FirebaseAuth.instance.currentUser?.uid ?? '',
+          )..init(),
         ),
       ],
       child: BlocConsumer<DashboardCubit, DashboardState>(

@@ -1,37 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'articlesModel.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class ArticlesModel {
-  String? title;
-  String? body;
-  String? aid;
-  String? uid;
-  List<String>? image;
-  List<String>? tags;
+  final String id;
+  final String title;
+  final String body;
+  final String aid;
+  final List<String>? image;
+  final List<String>? tags;
 
-  ArticlesModel({
-    this.title,
-    this.body,
-    this.aid,
-    this.image,
-    this.tags,
-    this.uid,
-  });
+  ArticlesModel(
+      this.body, this.aid, this.image, this.tags, this.id, this.title);
 
-  ArticlesModel.fromJson(Map<String, dynamic>? json) {
-    title = json?['title'];
-    body = json?['body'];
-    aid = json?['aid'];
-    image = json?['image'];
-    tags = json?['tags'];
-    uid = json?['uid'];
-  }
+  factory ArticlesModel.fromJson(Map<String, dynamic> json) =>
+      _$ArticlesModelFromJson(json);
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'body': body,
-      'aid': aid,
-      'image': image,
-      'tags': tags,
-      'uid': uid,
-    };
-  }
+  Map<String, dynamic> toJson() => _$ArticlesModelToJson(this);
 }

@@ -58,4 +58,11 @@ class DashboardLoading extends DashboardState {}
 
 class DashboardLoaded extends DashboardState {}
 
-class DashboardError extends DashboardState {}
+class DashboardErrorState extends DashboardState {
+  final String error;
+
+  const DashboardErrorState({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}

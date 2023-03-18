@@ -1,6 +1,11 @@
+import 'package:dashborad/bloc/admin/admin_cubit.dart';
+import 'package:dashborad/bloc/articles/articlest_cubit.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
+import 'package:dashborad/bloc/icons/icons_cubit.dart';
+import 'package:dashborad/bloc/tags/tags_cubit.dart';
 import 'package:dashborad/data/local/constans/appImages.dart';
 import 'package:dashborad/presentation/wedgits/glassmorphism_container.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +27,13 @@ class CustomScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => DashboardCubit(),
+      create: (context) => DashboardCubit(
+        adminCubit: context.read<AdminCubit>(),
+        iconsCubit: context.read<IconsCubit>(),
+        tagsCubit: context.read<TagsCubit>(),
+        articlesCubit: context.read<ArticlestCubit>(),
+        uid: FirebaseAuth.instance.currentUser?.uid ?? '',
+      ),
       child: BlocBuilder<DashboardCubit, DashboardState>(
         builder: (context, state) {
           return Scaffold(

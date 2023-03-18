@@ -1,33 +1,23 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'adminModel.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class AdminModel {
-  String? name;
-  String? email;
-  String? uid;
-  String? image;
-  double? postsCount;
+  final String id;
+  final String name;
+  final String email;
+  final String password;
+  final String image;
+  final int postsCount;
+  final int tagsCount;
+  final int iconssCount;
 
-  AdminModel({
-    this.name,
-    this.email,
-    this.uid,
-    this.image,
-    this.postsCount,
-  });
+  AdminModel(this.id, this.name, this.email, this.password, this.image,
+      this.postsCount, this.tagsCount, this.iconssCount);
 
-  AdminModel.fromJson(Map<String, dynamic>? json) {
-    name = json?['name'];
-    email = json?['email'];
-    uid = json?['uid'];
-    image = json?['image'];
-    postsCount = json?['postsCount'];
-  }
+  factory AdminModel.fromJson(Map<String, dynamic> json) =>
+      _$AdminModelFromJson(json);
 
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'email': email,
-      'uid': uid,
-      'image': image,
-      'postsCount': postsCount,
-    };
-  }
+  Map<String, dynamic> toJson() => _$AdminModelToJson(this);
 }

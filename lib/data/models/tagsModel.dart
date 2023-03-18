@@ -1,31 +1,19 @@
-class TagsModel {
-  String? title;
-  String? tid;
-  String? uid;
-  String? image;
-  List<String>? postsUid;
+import 'package:json_annotation/json_annotation.dart';
 
-  TagsModel({
-    this.title,
-    this.tid,
-    this.image,
-    this.postsUid,
-    this.uid,
-  });
-  TagsModel.fromJson(Map<String, dynamic>? json) {
-    title = json?['title'];
-    tid = json?['tid'];
-    image = json?['image'];
-    postsUid = json?['postsUid'];
-    uid = json?['uid'];
-  }
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'tid': tid,
-      'image': image,
-      'postsUid': postsUid,
-      'uid': uid,
-    };
-  }
+part 'tagsModel.g.dart';
+
+@JsonSerializable(explicitToJson: true)
+class TagsModel {
+  final String id;
+  final String title;
+  final String image;
+  final String aId;
+  final int articleCount;
+
+  TagsModel(this.id, this.title, this.image, this.aId, this.articleCount);
+
+  factory TagsModel.fromJson(Map<String, dynamic> json) =>
+      _$TagsModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TagsModelToJson(this);
 }

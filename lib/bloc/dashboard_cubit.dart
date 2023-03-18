@@ -24,19 +24,38 @@ import 'package:meta/meta.dart';
 part 'dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit() : super(DashboardInitial());
+  DashboardCubit({
+    required this.adminCubit,
+    required this.iconsCubit,
+    required this.tagsCubit,
+    required this.articlesCubit,
+    required this.uid,
+  }) : super(DashboardInitial());
 
   static DashboardCubit get(context) => BlocProvider.of(context);
+  final AdminCubit adminCubit;
+  final IconsCubit iconsCubit;
+  final TagsCubit tagsCubit;
+  final ArticlestCubit articlesCubit;
+  String uid;
   StreamController<AdminModel> adminModelController =
       StreamController<AdminModel>.broadcast();
-  fetchData(
-    BuildContext context,
-  ) async {
-    final adminCubit = BlocProvider.of<AdminCubit>(context);
-    final iconsCubit = BlocProvider.of<IconsCubit>(context);
-    final tagsCubit = BlocProvider.of<TagsCubit>(context);
-    final articlesCubit = BlocProvider.of<ArticlestCubit>(context);
+  // Future<void> fetchData() async {
+  //   try {
+  //     await adminCubit.getUserData(uid);
+  //     // await adminCubit.getAllUsers();
+  //     // await iconsCubit.getIconsData();
+  //     // await tagsCubit.getAllTagsData();
+  //     // await articlesCubit.getAllArticles();
+  //   } catch (e) {
+  //     print('Error in fetchData: $e');
+  //     emit(DashboardErrorState(
+  //       error: e.toString(),
+  //     ));
+  //   }
+  // }
 
+  Future<void> fetchData() async {
     // استدعاء دوال الحصول على البيانات من الـcubits الأخرى
     final adminData = await adminCubit.getData();
     final allAdminsData = await adminCubit.getAllUsers();
