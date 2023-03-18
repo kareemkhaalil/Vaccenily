@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/data/local/constans/constans.dart';
+import 'package:dashborad/data/models/adminModel.dart';
 
 import 'package:dashborad/data/models/articlesModel.dart';
 import 'package:dashborad/data/models/iconsModel.dart';
@@ -45,16 +46,10 @@ class AdminCubit extends Cubit<AdminState> {
     double? postsCount,
   }) {
     try {
-      AdminModel model = AdminModel(
-        name: name,
-        email: email,
-        uid: uid,
-        postsCount: postsCount,
-      );
       FirebaseFirestore.instance
           .collection('admins')
           .doc(uid)
-          .set(model.toJson());
+          .set(model!.toJson());
       emit(AdminCreateSuccessState());
     } on FirebaseException catch (e) {
       print(e.message);
@@ -80,7 +75,7 @@ class AdminCubit extends Cubit<AdminState> {
                 .doc(uid.toString())
                 .get();
         if (snapshot.exists) {
-          loggedInAdmin = AdminModel.fromJson(snapshot.data());
+          loggedInAdmin = AdminModel.fromJson(snapshot.data()!);
         }
       } on FirebaseException catch (e) {
         print("Error getting admin data: ${e.message}");
@@ -100,7 +95,7 @@ class AdminCubit extends Cubit<AdminState> {
           .doc(uid.toString())
           .get();
       if (snapshot.exists) {
-        AdminModel user = AdminModel.fromJson(snapshot.data());
+        AdminModel user = AdminModel.fromJson(snapshot.data()!);
         adminModelController.add(user);
         print(user.name);
         emit(AdminGetUserSuccessState(user));
@@ -159,19 +154,14 @@ class AdminCubit extends Cubit<AdminState> {
     String? image,
   }) {
     // emit(SocialUpdateLoadingState());
-    AdminModel modelMap = AdminModel(
-      name: name,
-      email: model!.email,
-      uid: model!.uid,
-      image: image ?? model!.image,
-    );
+
     FirebaseFirestore.instance
         .collection('users')
-        .doc(model!.uid)
-        .update(modelMap.toMap())
+        .doc(model!.id)
+        .update(model!.toJson())
         .then((value) {
       getUserData(
-        model!.uid.toString(),
+        model!.id.toString(),
       );
     });
   }

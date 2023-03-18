@@ -12,6 +12,7 @@ part 'articlest_state.dart';
 class ArticlestCubit extends Cubit<ArticlestState> {
   ArticlestCubit() : super(ArticlestInitial());
   AdminModel? adminModel;
+  ArticlesModel? articlesModel;
 
   void createArticle({
     required String title,
@@ -22,18 +23,11 @@ class ArticlestCubit extends Cubit<ArticlestState> {
   }) {
     try {
       emit(ArticlestCreatingLoadingState());
-      ArticlesModel model = ArticlesModel(
-        title: title,
-        body: body,
-        aid: aid,
-        image: image,
-        tags: tags,
-        uid: adminModel!.uid,
-      );
+
       FirebaseFirestore.instance
           .collection('articles')
           .doc(aid)
-          .set(model.toMap());
+          .set(articlesModel!.toJson());
       emit(ArticlestCreateSuccessState());
     } on FirebaseException catch (e) {
       emit(ArticlestCreateErrorState(e.message!));
@@ -85,18 +79,11 @@ class ArticlestCubit extends Cubit<ArticlestState> {
   }) {
     try {
       emit(ArticlesUpdateLoadingState());
-      ArticlesModel model = ArticlesModel(
-        title: title,
-        body: body,
-        aid: aid,
-        image: image,
-        tags: tags,
-        uid: adminModel!.uid,
-      );
+
       FirebaseFirestore.instance
           .collection('articles')
           .doc(aid)
-          .update(model.toMap());
+          .update(articlesModel!.toJson());
       emit(ArticlesUpdateSuccessState());
     } on FirebaseException catch (e) {
       emit(ArticlesUpdateErrorState(e.message!));
@@ -118,19 +105,19 @@ class ArticlestCubit extends Cubit<ArticlestState> {
   }
 
   Future<void> getAllArticles() async {
-    try {
-      emit(ArticlesGetAllLoadingState());
-      FirebaseFirestore.instance.collection('articles').get().then((value) {
-        List<ArticlesModel> articles = [];
-        value.docs.forEach((element) {
-          articles.add(ArticlesModel.fromJson(element.data()));
-        });
-        emit(ArticlesLoaded(articles));
-      });
-    } on FirebaseException catch (e) {
-      emit(ArticlesDeleteErrorState(e.message!));
-      print(e.message);
-    }
+    // try {
+    //   emit(ArticlesGetAllLoadingState());
+    //   FirebaseFirestore.instance.collection('articles').get().then((value) {
+    //     List<ArticlesModel> articles = [];
+    //     value.docs.forEach((element) {
+    //       articles.add(ArticlesModel.fromJson(element.data()));
+    //     });
+    //     emit(ArticlesLoaded(articles));
+    //   });
+    // } on FirebaseException catch (e) {
+    //   emit(ArticlesDeleteErrorState(e.message!));
+    //   print(e.message);
+    // }
   }
 
   void getArticleById({
@@ -143,7 +130,7 @@ class ArticlestCubit extends Cubit<ArticlestState> {
           .doc(aid)
           .get()
           .then((value) {
-        ArticlesModel article = ArticlesModel.fromJson(value.data());
+        ArticlesModel article = ArticlesModel.fromJson(value.data()!);
         emit(ArticlesGetByIdSuccessState([article]));
       });
     } on FirebaseException catch (e) {

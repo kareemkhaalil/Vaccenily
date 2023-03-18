@@ -55,17 +55,6 @@ class HomeScreen extends StatelessWidget {
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.hasData == false) {
-                    print(snapshot.data);
-                    return CircularProgressIndicator();
-                  }
-// يمكنك استبدا
-                  else if (snapshot.error != null) {
-                    return Text(snapshot.error
-                        .toString()); // يمكنك استبداله بشاشة خطأ مناسبة
-                  } else if (state is DashboardDataLoaded) {
-                    List<AdminModel> allAdmins = state.adminData;
-                    AdminModel loggedInAdmin = state.loggedInAdmin;
-
                     var cubit = DashboardCubit.get(context);
                     return CustomScaffold(
                       child: SingleChildScrollView(
@@ -633,186 +622,157 @@ class HomeScreen extends StatelessWidget {
                                                       milliseconds: 500),
                                                   child: Column(
                                                     children: [
-                                                      cubit.iconsModel?.iId ==
-                                                              null
-                                                          ? Center(
-                                                              child:
-                                                                  GlassmorphismContainer(
-                                                                width:
-                                                                    screenSize
-                                                                        .width,
-                                                                height: screenSize
-                                                                        .height *
-                                                                    0.2,
-                                                                child: Center(
-                                                                  child: Text(
-                                                                    'No Data',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontFamily:
-                                                                          GoogleFonts.cairo()
-                                                                              .fontFamily,
-                                                                      fontSize:
-                                                                          20,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w900,
-                                                                      color: AppColors
-                                                                          .backgroundColor,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            )
-                                                          : CarouselSlider
+                                                      Center(
+                                                        child:
+                                                            GlassmorphismContainer(
+                                                          width:
+                                                              screenSize.width,
+                                                          height: screenSize
+                                                                  .height *
+                                                              0.2,
+                                                          child: CarouselSlider
                                                               .builder(
-                                                              options:
-                                                                  CarouselOptions(
-                                                                height: screenSize
-                                                                        .height *
-                                                                    0.3,
-                                                                aspectRatio:
-                                                                    2.0,
-                                                                enlargeCenterPage:
-                                                                    false,
-                                                                viewportFraction:
-                                                                    1,
-                                                                enableInfiniteScroll:
-                                                                    true,
-                                                                onPageChanged:
-                                                                    (index,
-                                                                        reason) {
-                                                                  cubit.changePage(
-                                                                      index);
-                                                                },
-                                                              ),
-                                                              itemCount: (cubit
-                                                                      .iconsModel!
-                                                                      .iId!
-                                                                      .length)
-                                                                  .round(),
-                                                              itemBuilder:
-                                                                  (context,
-                                                                      index,
-                                                                      realIdx) {
-                                                                final int
-                                                                    first =
-                                                                    index * 2;
-                                                                final int
-                                                                    second =
-                                                                    first + 1;
-                                                                final int
-                                                                    third =
-                                                                    second + 1;
-                                                                final int
-                                                                    fourth =
-                                                                    third + 1;
-                                                                final int
-                                                                    fifth =
-                                                                    fourth + 1;
-                                                                final int
-                                                                    sixth =
-                                                                    fifth + 1;
-                                                                final int
-                                                                    seventh =
-                                                                    sixth + 1;
-                                                                final int
-                                                                    eighth =
-                                                                    seventh + 1;
-
-                                                                return Row(
-                                                                  children: [
-                                                                    first,
-                                                                    second,
-                                                                    third,
-                                                                    fourth,
-                                                                    fifth,
-                                                                    sixth,
-                                                                    seventh,
-                                                                    eighth,
-                                                                  ].map((idx) {
-                                                                    return Expanded(
-                                                                      flex: 1,
-                                                                      child:
-                                                                          Stack(
-                                                                        alignment:
-                                                                            Alignment.topCenter,
-                                                                        children: [
-                                                                          GlassmorphismContainer(
-                                                                            height:
-                                                                                screenSize.height * 0.3,
-                                                                            width:
-                                                                                screenSize.width * 0.1,
-                                                                          ),
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.all(10.0),
-                                                                            child:
-                                                                                GlassmorphismContainer(
-                                                                              height: screenSize.height * 0.15,
-                                                                              width: screenSize.width * 0.085,
-                                                                            ),
-                                                                          ),
-                                                                          Positioned(
-                                                                            top:
-                                                                                screenSize.height * 0.17,
-                                                                            child:
-                                                                                Column(
-                                                                              children: [
-                                                                                Text(
-                                                                                  cubit.iconsModel!.title![idx].toString(),
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 20,
-                                                                                    fontFamily: GoogleFonts.cairo().fontFamily,
-                                                                                    fontWeight: FontWeight.w900,
-                                                                                  ),
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  height: screenSize.height * 0.01,
-                                                                                ),
-                                                                                GlassmorphismContainer(
-                                                                                  height: screenSize.height * 0.05,
-                                                                                  width: screenSize.width * 0.08,
-                                                                                  child: Padding(
-                                                                                    padding: const EdgeInsets.symmetric(
-                                                                                      horizontal: 10.0,
-                                                                                    ),
-                                                                                    child: Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                                      children: [
-                                                                                        Text(
-                                                                                          'Articles',
-                                                                                          style: TextStyle(
-                                                                                            fontSize: 20,
-                                                                                            fontFamily: GoogleFonts.cairo().fontFamily,
-                                                                                            fontWeight: FontWeight.w900,
-                                                                                          ),
-                                                                                        ),
-                                                                                        SizedBox(
-                                                                                          width: screenSize.width * 0.01,
-                                                                                        ),
-                                                                                        Text(
-                                                                                          cubit.iconsModel!.posts!.length.toString(),
-                                                                                          style: TextStyle(
-                                                                                            fontSize: 20,
-                                                                                            fontFamily: GoogleFonts.cairo().fontFamily,
-                                                                                            fontWeight: FontWeight.w900,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          )
-                                                                        ],
-                                                                      ),
-                                                                    );
-                                                                  }).toList(),
-                                                                );
+                                                            options:
+                                                                CarouselOptions(
+                                                              height: screenSize
+                                                                      .height *
+                                                                  0.3,
+                                                              aspectRatio: 2.0,
+                                                              enlargeCenterPage:
+                                                                  false,
+                                                              viewportFraction:
+                                                                  1,
+                                                              enableInfiniteScroll:
+                                                                  true,
+                                                              onPageChanged:
+                                                                  (index,
+                                                                      reason) {
+                                                                cubit
+                                                                    .changePage(
+                                                                        index);
                                                               },
                                                             ),
+                                                            itemCount:
+                                                                10.round(),
+                                                            itemBuilder:
+                                                                (context, index,
+                                                                    realIdx) {
+                                                              final int first =
+                                                                  index * 2;
+                                                              final int second =
+                                                                  first + 1;
+                                                              final int third =
+                                                                  second + 1;
+                                                              final int fourth =
+                                                                  third + 1;
+                                                              final int fifth =
+                                                                  fourth + 1;
+                                                              final int sixth =
+                                                                  fifth + 1;
+                                                              final int
+                                                                  seventh =
+                                                                  sixth + 1;
+                                                              final int eighth =
+                                                                  seventh + 1;
+
+                                                              return Row(
+                                                                children: [
+                                                                  first,
+                                                                  second,
+                                                                  third,
+                                                                  fourth,
+                                                                  fifth,
+                                                                  sixth,
+                                                                  seventh,
+                                                                  eighth,
+                                                                ].map((idx) {
+                                                                  return Expanded(
+                                                                    flex: 1,
+                                                                    child:
+                                                                        Stack(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .topCenter,
+                                                                      children: [
+                                                                        GlassmorphismContainer(
+                                                                          height:
+                                                                              screenSize.height * 0.3,
+                                                                          width:
+                                                                              screenSize.width * 0.1,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(10.0),
+                                                                          child:
+                                                                              GlassmorphismContainer(
+                                                                            height:
+                                                                                screenSize.height * 0.15,
+                                                                            width:
+                                                                                screenSize.width * 0.085,
+                                                                          ),
+                                                                        ),
+                                                                        Positioned(
+                                                                          top: screenSize.height *
+                                                                              0.17,
+                                                                          child:
+                                                                              Column(
+                                                                            children: [
+                                                                              Text(
+                                                                                '',
+                                                                                style: TextStyle(
+                                                                                  fontSize: 20,
+                                                                                  fontFamily: GoogleFonts.cairo().fontFamily,
+                                                                                  fontWeight: FontWeight.w900,
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: screenSize.height * 0.01,
+                                                                              ),
+                                                                              GlassmorphismContainer(
+                                                                                height: screenSize.height * 0.05,
+                                                                                width: screenSize.width * 0.08,
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.symmetric(
+                                                                                    horizontal: 10.0,
+                                                                                  ),
+                                                                                  child: Row(
+                                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                                    children: [
+                                                                                      Text(
+                                                                                        'Articles',
+                                                                                        style: TextStyle(
+                                                                                          fontSize: 20,
+                                                                                          fontFamily: GoogleFonts.cairo().fontFamily,
+                                                                                          fontWeight: FontWeight.w900,
+                                                                                        ),
+                                                                                      ),
+                                                                                      SizedBox(
+                                                                                        width: screenSize.width * 0.01,
+                                                                                      ),
+                                                                                      Text(
+                                                                                        '',
+                                                                                        style: TextStyle(
+                                                                                          fontSize: 20,
+                                                                                          fontFamily: GoogleFonts.cairo().fontFamily,
+                                                                                          fontWeight: FontWeight.w900,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  );
+                                                                }).toList(),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
                                                       SizedBox(
                                                         height:
                                                             screenSize.height *
@@ -1306,7 +1266,7 @@ class HomeScreen extends StatelessWidget {
                                                             ).toList(),
                                                           );
                                                         },
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -1321,45 +1281,12 @@ class HomeScreen extends StatelessWidget {
                                                       Row(
                                                         children: [
                                                           GlassmorphismContainer(
-                                                              width: screenSize
-                                                                      .width /
-                                                                  3,
-                                                              height: screenSize
-                                                                  .height,
-                                                              child: Column(
-                                                                children: [
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      print(
-                                                                        loggedInAdmin
-                                                                            .name,
-                                                                      );
-                                                                      print(
-                                                                        loggedInAdmin
-                                                                            .email,
-                                                                      );
-                                                                      print(
-                                                                        loggedInAdmin
-                                                                            .uid,
-                                                                      );
-                                                                    },
-                                                                    child:
-                                                                        CircleAvatar(
-                                                                      radius:
-                                                                          50,
-                                                                      child: Image.network(loggedInAdmin
-                                                                          .image
-                                                                          .toString()),
-                                                                    ),
-                                                                  ),
-                                                                  Text(loggedInAdmin
-                                                                      .name
-                                                                      .toString()),
-                                                                  Text(loggedInAdmin
-                                                                      .email
-                                                                      .toString()),
-                                                                ],
-                                                              ))
+                                                            width: screenSize
+                                                                    .width /
+                                                                3,
+                                                            height: screenSize
+                                                                .height,
+                                                          )
                                                         ],
                                                       )
                                                     ],

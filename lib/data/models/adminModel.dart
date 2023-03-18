@@ -13,8 +13,15 @@ class AdminModel {
   final int tagsCount;
   final int iconssCount;
 
-  AdminModel(this.id, this.name, this.email, this.password, this.image,
-      this.postsCount, this.tagsCount, this.iconssCount);
+  AdminModel(
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.password,
+      required this.image,
+      required this.postsCount,
+      required this.tagsCount,
+      required this.iconssCount});
 
   factory AdminModel.fromJson(Map<String, dynamic> json) =>
       _$AdminModelFromJson(json);

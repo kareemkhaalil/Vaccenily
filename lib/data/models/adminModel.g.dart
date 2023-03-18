@@ -7,14 +7,14 @@ part of 'adminModel.dart';
 // **************************************************************************
 
 AdminModel _$AdminModelFromJson(Map<String, dynamic> json) => AdminModel(
-      json['id'] as String,
-      json['name'] as String,
-      json['email'] as String,
-      json['password'] as String,
-      json['image'] as String,
-      json['postsCount'] as int,
-      json['tagsCount'] as int,
-      json['iconssCount'] as int,
+      id: json['id'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      password: json['password'] as String,
+      image: json['image'] as String,
+      postsCount: json['postsCount'] as int,
+      tagsCount: json['tagsCount'] as int,
+      iconssCount: json['iconssCount'] as int,
     );
 
 Map<String, dynamic> _$AdminModelToJson(AdminModel instance) =>

@@ -17,19 +17,19 @@ class TagsCubit extends Cubit<TagsState> {
     required String tid,
     List<String>? postsUid,
   }) {
-    try {
-      emit(TagsCreatingLoadingState());
-      TagsModel model = TagsModel(
-        title: name,
-        tid: tid,
-        postsUid: [],
-      );
-      FirebaseFirestore.instance.collection('tags').doc(tid).set(model.toMap());
-      emit(TagsCreateSuccessState());
-    } on FirebaseException catch (e) {
-      emit(TagsCreateErrorState(e.message!));
-      print(e.message);
-    }
+    // try {
+    //   emit(TagsCreatingLoadingState());
+    //   TagsModel model = TagsModel(
+    //     title: name,
+    //     tid: tid,
+    //     postsUid: [],
+    //   );
+    //   FirebaseFirestore.instance.collection('tags').doc(tid).set(model.toMap());
+    //   emit(TagsCreateSuccessState());
+    // } on FirebaseException catch (e) {
+    //   emit(TagsCreateErrorState(e.message!));
+    //   print(e.message);
+    // }
   }
 
   void deleteTag({
@@ -65,19 +65,19 @@ class TagsCubit extends Cubit<TagsState> {
   }
 
   Future<void> getAllTagsData() async {
-    try {
-      emit(TagsGetAllloadingState());
-      FirebaseFirestore.instance.collection('tags').get().then((value) {
-        List<TagsModel> tags = [];
-        value.docs.forEach((element) {
-          tags.add(TagsModel.fromJson(element.data()));
-        });
-        emit(TagsLoaded(tags));
-      });
-    } on FirebaseException catch (e) {
-      print(e.message);
-      emit(TagsGetAllErrorState(e.message!));
-    }
+    // try {
+    //   emit(TagsGetAllloadingState());
+    //   FirebaseFirestore.instance.collection('tags').get().then((value) {
+    //     List<TagsModel> tags = [];
+    //     value.docs.forEach((element) {
+    //       tags.add(TagsModel.fromJson(element.data()));
+    //     });
+    //     emit(TagsLoaded(tags));
+    //   });
+    // } on FirebaseException catch (e) {
+    //   print(e.message);
+    //   emit(TagsGetAllErrorState(e.message!));
+    // }
   }
 
 //pick image
@@ -127,19 +127,19 @@ class TagsCubit extends Cubit<TagsState> {
     String? image,
   }) {
     // emit(SocialUpdateLoadingState());
-    TagsModel modelMap = TagsModel(
-      title: name,
-      image: image,
-      tid: model!.tid,
-      postsUid: model!.postsUid,
-    );
-    FirebaseFirestore.instance
-        .collection('tags')
-        .doc(model!.tid)
-        .update(modelMap.toMap())
-        .then((value) {
-      getTagsData(model!.tid);
-    });
+    // TagsModel modelMap = TagsModel(
+    //   title: name,
+    //   image: image,
+    //   tid: model!.tid,
+    //   postsUid: model!.postsUid,
+    // );
+    // FirebaseFirestore.instance
+    //     .collection('tags')
+    //     .doc(model!.tid)
+    //     .update(modelMap.toMap())
+    //     .then((value) {
+    //   getTagsData(model!.tid);
+    // });
   }
 
   void getTagsDataByTitle(title) {

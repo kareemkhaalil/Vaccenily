@@ -66,7 +66,7 @@ class LoginCubit extends Cubit<LoginState> {
           .doc(uid)
           .get()
           .then((value) async {
-        model = AdminModel.fromJson(value.data());
+        model = AdminModel.fromJson(value.data()!);
         print(model!.name);
         emit(AdminGetUserSuccessState());
       });
@@ -80,6 +80,15 @@ class LoginCubit extends Cubit<LoginState> {
   init() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    model = AdminModel();
+    model = AdminModel(
+      email: '',
+      name: '',
+      password: '',
+      postsCount: 0,
+      id: '',
+      image: '',
+      tagsCount: 0,
+      iconssCount: 0,
+    );
   }
 }

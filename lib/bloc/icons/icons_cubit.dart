@@ -12,19 +12,19 @@ class IconsCubit extends Cubit<IconsState> {
   IconsCubit() : super(IconsInitial());
 
   Future<void> getIconsData() async {
-    try {
-      emit(IconsGetloadingState());
-      FirebaseFirestore.instance.collection('icons').get().then((value) {
-        List<IconsModel> icons = [];
-        value.docs.forEach((element) {
-          icons.add(IconsModel.fromJson(element.data()));
-        });
-        emit(IconsLoaded(icons));
-      });
-    } on FirebaseException catch (e) {
-      print(e.message);
-      emit(IconsGetErrorState(e.message!));
-    }
+    // try {
+    //   emit(IconsGetloadingState());
+    //   FirebaseFirestore.instance.collection('icons').get().then((value) {
+    //     List<IconsModel> icons = [];
+    //     value.docs.forEach((element) {
+    //       icons.add(IconsModel.fromJson(element.data()));
+    //     });
+    //     emit(IconsLoaded(icons));
+    //   });
+    // } on FirebaseException catch (e) {
+    //   print(e.message);
+    //   emit(IconsGetErrorState(e.message!));
+    // }
   }
 
   void createIcon({
@@ -32,22 +32,22 @@ class IconsCubit extends Cubit<IconsState> {
     required String? image,
     required String? iId,
   }) {
-    try {
-      emit(IconsCreatingLoadingState());
-      IconsModel model = IconsModel(
-        title: title,
-        image: image,
-        iId: iId,
-      );
-      FirebaseFirestore.instance
-          .collection('icons')
-          .doc(iId)
-          .set(model.toMap());
-      emit(IconsCreateSuccessState());
-    } on FirebaseException catch (e) {
-      emit(IconsCreateErrorState(e.message!));
-      print(e.message);
-    }
+    // try {
+    //   emit(IconsCreatingLoadingState());
+    //   IconsModel model = IconsModel(
+    //     title: title,
+    //     image: image,
+    //     iId: iId,
+    //   );
+    //   FirebaseFirestore.instance
+    //       .collection('icons')
+    //       .doc(iId)
+    //       .set(model.toMap());
+    //   emit(IconsCreateSuccessState());
+    // } on FirebaseException catch (e) {
+    //   emit(IconsCreateErrorState(e.message!));
+    //   print(e.message);
+    // }
   }
 
   void deleteIcon({
@@ -70,22 +70,22 @@ class IconsCubit extends Cubit<IconsState> {
     required String image,
     required String iId,
   }) {
-    try {
-      emit(IconsUpdateLoadingState());
-      IconsModel model = IconsModel(
-        title: title,
-        image: image,
-        iId: iId,
-      );
-      FirebaseFirestore.instance
-          .collection('icons')
-          .doc(iId)
-          .update(model.toMap());
-      emit(IconsUpdateSuccessState());
-    } on FirebaseException catch (e) {
-      emit(IconsUpdateErrorState(e.message!));
-      print(e.message);
-    }
+    // try {
+    //   emit(IconsUpdateLoadingState());
+    //   IconsModel model = IconsModel(
+    //     title: title,
+    //     image: image,
+    //     iId: iId,
+    //   );
+    //   FirebaseFirestore.instance
+    //       .collection('icons')
+    //       .doc(iId)
+    //       .update(model.toMap());
+    //   emit(IconsUpdateSuccessState());
+    // } on FirebaseException catch (e) {
+    //   emit(IconsUpdateErrorState(e.message!));
+    //   print(e.message);
+    // }
   }
 
   File? articlesImageFile;
@@ -104,25 +104,25 @@ class IconsCubit extends Cubit<IconsState> {
   }
 
   void iconsUploadImages() {
-    emit(IconsUploadImageLoadingState());
-    FirebaseStorage.instance
-        .ref()
-        .child('icons')
-        .child(model!.iId!)
-        .child('image')
-        .putFile(articlesImageFile!)
-        .then(
-      (value) {
-        value.ref.getDownloadURL().then((value) {
-          print(value);
-          createIcon(
-            title: model!.title,
-            image: value,
-            iId: model!.iId,
-          );
-        });
-      },
-    );
+    // emit(IconsUploadImageLoadingState());
+    // FirebaseStorage.instance
+    //     .ref()
+    //     .child('icons')
+    //     .child(model!.iId!)
+    //     .child('image')
+    //     .putFile(articlesImageFile!)
+    //     .then(
+    //   (value) {
+    //     value.ref.getDownloadURL().then((value) {
+    //       print(value);
+    //       createIcon(
+    //         title: model!.title,
+    //         image: value,
+    //         iId: model!.iId,
+    //       );
+    //     });
+    //   },
+    // );
   }
 
   void getIconsDataById({

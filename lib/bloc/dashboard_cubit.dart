@@ -156,10 +156,6 @@ class DashboardCubit extends Cubit<DashboardState> {
     tagsOpacity = 0;
     articlesOpacity = 0;
     iconsOpacity = 0;
-    adminModel = AdminModel();
-    tagsModel = TagsModel();
-    iconsModel = IconsModel();
-    articleModel = ArticlesModel();
     pageController = PageController(
       initialPage: 0,
       viewportFraction: 0.8,
