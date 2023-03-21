@@ -94,37 +94,47 @@ class DashboardCubit extends Cubit<DashboardState> {
   //   }
   // }
   Future<void> fetchData() async {
-    final adminData = await adminCubit.getUser();
-    final allAdminsData = await adminCubit.getAllUsers();
+    try {
+      final adminData = await adminCubit.getUser();
+      final allAdminsData = await adminCubit.getAllUsers();
 
-    await Future.wait([
-      iconsCubit.getIconsData(),
-      tagsCubit.getAllTagsData(),
-      articlesCubit.getAllArticles(),
-    ]);
+      await Future.wait([
+        iconsCubit.getIconsData(),
+        tagsCubit.getAllTagsData(),
+        articlesCubit.getAllArticles(),
+      ]);
 
-    final iconsState = iconsCubit.state;
-    final tagsState = tagsCubit.state;
-    final articlesState = articlesCubit.state;
+      final iconsState = iconsCubit.state;
+      final tagsState = tagsCubit.state;
+      final articlesState = articlesCubit.state;
 
-    if (adminCubit.state is AdminsLoaded &&
-        iconsState is IconsLoaded &&
-        tagsState is TagsLoaded &&
-        articlesState is ArticlesLoaded) {
-      emit(DashboardDataLoaded(
-        loggedInAdmin: adminData,
-        adminData: allAdminsData,
-        iconsData: iconsState.iconsData,
-        tagsData: tagsState.tagsData,
-        articlesData: articlesState.articles,
-      ));
-    } else {
-      print('Error in data:');
-      print('adminCubit.state: ${adminCubit.state}');
-      print('iconsState: $iconsState');
-      print('tagsState: $tagsState');
-      print('articlesState: $articlesState');
+      if (adminCubit.state is AdminsLoaded &&
+          iconsState is IconsLoaded &&
+          tagsState is TagsLoaded &&
+          articlesState is ArticlesLoaded) {
+        emit(DashboardDataLoaded(
+          loggedInAdmin: adminData,
+          adminData: allAdminsData,
+          iconsData: iconsState.iconsData,
+          tagsData: tagsState.tagsData,
+          articlesData: articlesState.articles,
+        ));
+      } else {
+        _handleError(adminCubit.state, iconsState, tagsState, articlesState);
+      }
+    } catch (e) {
+      emit(DashboardErrorState(error: 'Failed to load data.'));
     }
+  }
+
+  void _handleError(AdminState adminsState, IconsState iconsState,
+      TagsState tagsState, ArticlesState articlesState) {
+    print('Error in data:');
+    print('adminsState: $adminsState');
+    print('iconsState: $iconsState');
+    print('tagsState: $tagsState');
+    print('articlesState: $articlesState');
+    emit(DashboardErrorState(error: 'Failed to load data.'));
   }
 
   var sliderSmall = 0.05;
