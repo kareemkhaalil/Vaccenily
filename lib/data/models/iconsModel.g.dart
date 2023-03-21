@@ -4,11 +4,6 @@ part of 'iconsModel.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
-// final String id;
-// final String iconUrl;
-// final String? iconTitle;
-// final int articleCount;
-// final String? aId;
 // **************************************************************************
 
 IconsModel _$IconsModelFromJson(Map<String, dynamic> json) => IconsModel(

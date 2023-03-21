@@ -4,6 +4,7 @@ import 'package:dashborad/bloc/blocObs.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/bloc/icons/icons_cubit.dart';
 import 'package:dashborad/bloc/tags/tags_cubit.dart';
+import 'package:dashborad/data/remote/repo.dart';
 import 'package:dashborad/firebase_options.dart';
 import 'package:dashborad/presentation/screens/homeScreen.dart';
 import 'package:dashborad/presentation/screens/login_screen.dart';
@@ -17,23 +18,30 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Bloc.observer = MyBlocObserver();
+  final repository = Repository();
 
-  runApp(MyApp());
+  runApp(MyApp(
+    adminCubit: AdminCubit(repository),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  final AdminCubit adminCubit;
+
+  MyApp({super.key, required this.adminCubit});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final repository = Repository();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<AdminCubit>(
-          create: (context) => AdminCubit()..getAllUsers(),
+          create: (context) => AdminCubit(repository)..getAllUsers(),
         ),
-        BlocProvider<ArticlestCubit>(
-          create: (context) => ArticlestCubit()..getAllArticles(),
+        BlocProvider<ArticlesCubit>(
+          create: (context) => ArticlesCubit(repository)..getAllArticles(),
         ),
         BlocProvider<IconsCubit>(
           create: (context) => IconsCubit()..getIconsData(),
@@ -46,7 +54,7 @@ class MyApp extends StatelessWidget {
             adminCubit: context.read<AdminCubit>(),
             iconsCubit: context.read<IconsCubit>(),
             tagsCubit: context.read<TagsCubit>(),
-            articlesCubit: context.read<ArticlestCubit>(),
+            articlesCubit: context.read<ArticlesCubit>(),
             uid: FirebaseAuth.instance.currentUser?.uid ?? '',
           )..init(),
         ),

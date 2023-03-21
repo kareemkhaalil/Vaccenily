@@ -14,6 +14,15 @@ class TagsModel {
 
   factory TagsModel.fromJson(Map<String, dynamic> json) =>
       _$TagsModelFromJson(json);
+  factory TagsModel.fromJsonWithId(String id, Map<String, dynamic> json) {
+    return TagsModel(
+      id,
+      json['title'] as String,
+      json['image'] as String,
+      json['aId'] as String,
+      json['articleCount'] as int,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$TagsModelToJson(this);
 }

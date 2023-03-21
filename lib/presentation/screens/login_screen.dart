@@ -1,8 +1,11 @@
 import 'dart:ui';
-import 'package:dashborad/bloc/auth/login_cubit.dart';
+import 'package:dashborad/bloc/admin/admin_cubit.dart';
+import 'package:dashborad/bloc/auth/auth_cubit.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/data/local/constans/appColors.dart';
 import 'package:dashborad/data/local/constans/appImages.dart';
+import 'package:dashborad/data/remote/fireAuth.dart';
+import 'package:dashborad/data/remote/repo.dart';
 import 'package:dashborad/presentation/wedgits/auth/custom_auth_text_form.dart';
 import 'package:dashborad/presentation/wedgits/custom_scaffold.dart';
 import 'package:dashborad/presentation/wedgits/glassmorphism_container.dart';
@@ -15,13 +18,17 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final repository = Repository();
+
     var screenSize = MediaQuery.of(context).size;
+    final Auth auth = Auth();
+    final adminCubit = AdminCubit(repository);
     return BlocProvider(
-      create: (context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit, LoginState>(
+      create: (context) => AuthCubit(auth, adminCubit),
+      child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {},
         builder: (context, state) {
-          var cubit = LoginCubit.get(context);
+          var cubit = context.read<AuthCubit>();
           return CustomScaffold(
             child: Center(
               child: Stack(
@@ -90,7 +97,11 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () {
-                                        cubit.adminLogin(context);
+                                        cubit.signIn(
+                                          cubit.emailController.text,
+                                          cubit.passwordController.text,
+                                          context,
+                                        );
                                       },
                                       child: Text(
                                         'Sign In',

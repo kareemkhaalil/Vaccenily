@@ -21,5 +21,14 @@ class IconsModel {
   factory IconsModel.fromJson(Map<String, dynamic> json) =>
       _$IconsModelFromJson(json);
 
+  factory IconsModel.fromJsonWithId(String id, Map<String, dynamic> json) =>
+      IconsModel(
+        id,
+        json['iconUrl'] as String,
+        json['iconTitle'] as String?,
+        json['articleCount'] as int,
+        json['aId'] as String?,
+      );
+
   Map<String, dynamic> toJson() => _$IconsModelToJson(this);
 }

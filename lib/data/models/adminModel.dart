@@ -23,8 +23,18 @@ class AdminModel {
       required this.tagsCount,
       required this.iconssCount});
 
-  factory AdminModel.fromJson(Map<String, dynamic> json) =>
-      _$AdminModelFromJson(json);
+  factory AdminModel.fromJson(Map<String, dynamic> json) {
+    return AdminModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      email: json['email'] ?? '',
+      password: json['password'] ?? '',
+      image: json['image'] ?? '',
+      postsCount: json['postsCount'] ?? 0,
+      tagsCount: json['tagsCount'] ?? 0,
+      iconssCount: json['iconssCount'] ?? 0,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$AdminModelToJson(this);
 }

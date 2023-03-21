@@ -31,7 +31,7 @@ class CustomScaffold extends StatelessWidget {
         adminCubit: context.read<AdminCubit>(),
         iconsCubit: context.read<IconsCubit>(),
         tagsCubit: context.read<TagsCubit>(),
-        articlesCubit: context.read<ArticlestCubit>(),
+        articlesCubit: context.read<ArticlesCubit>(),
         uid: FirebaseAuth.instance.currentUser?.uid ?? '',
       ),
       child: BlocBuilder<DashboardCubit, DashboardState>(

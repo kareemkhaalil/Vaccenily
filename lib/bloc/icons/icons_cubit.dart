@@ -12,19 +12,19 @@ class IconsCubit extends Cubit<IconsState> {
   IconsCubit() : super(IconsInitial());
 
   Future<void> getIconsData() async {
-    // try {
-    //   emit(IconsGetloadingState());
-    //   FirebaseFirestore.instance.collection('icons').get().then((value) {
-    //     List<IconsModel> icons = [];
-    //     value.docs.forEach((element) {
-    //       icons.add(IconsModel.fromJson(element.data()));
-    //     });
-    //     emit(IconsLoaded(icons));
-    //   });
-    // } on FirebaseException catch (e) {
-    //   print(e.message);
-    //   emit(IconsGetErrorState(e.message!));
-    // }
+    try {
+      emit(IconsGetloadingState());
+      FirebaseFirestore.instance.collection('icons').get().then((value) {
+        List<IconsModel> icons = [];
+        value.docs.forEach((element) {
+          icons.add(IconsModel.fromJson(element.data()));
+        });
+        emit(IconsLoaded(icons));
+      });
+    } on FirebaseException catch (e) {
+      print(e.message);
+      emit(IconsGetErrorState(e.message!));
+    }
   }
 
   void createIcon({

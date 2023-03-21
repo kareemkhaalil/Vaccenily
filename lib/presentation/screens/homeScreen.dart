@@ -57,8 +57,7 @@ class HomeScreen extends StatelessWidget {
             builder: (context, state) {
               return FutureBuilder(
                 future: dashboardCubit.fetchData(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                builder: (BuildContext context, state) {
                   if (state is DashboardDataLoaded) {
                     var cubit = DashboardCubit.get(context);
                     return CustomScaffold(

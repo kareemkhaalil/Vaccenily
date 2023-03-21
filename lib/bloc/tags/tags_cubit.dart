@@ -65,19 +65,19 @@ class TagsCubit extends Cubit<TagsState> {
   }
 
   Future<void> getAllTagsData() async {
-    // try {
-    //   emit(TagsGetAllloadingState());
-    //   FirebaseFirestore.instance.collection('tags').get().then((value) {
-    //     List<TagsModel> tags = [];
-    //     value.docs.forEach((element) {
-    //       tags.add(TagsModel.fromJson(element.data()));
-    //     });
-    //     emit(TagsLoaded(tags));
-    //   });
-    // } on FirebaseException catch (e) {
-    //   print(e.message);
-    //   emit(TagsGetAllErrorState(e.message!));
-    // }
+    try {
+      emit(TagsGetAllloadingState());
+      FirebaseFirestore.instance.collection('tags').get().then((value) {
+        List<TagsModel> tags = [];
+        value.docs.forEach((element) {
+          tags.add(TagsModel.fromJson(element.data()));
+        });
+        emit(TagsLoaded(tags));
+      });
+    } on FirebaseException catch (e) {
+      print(e.message);
+      emit(TagsGetAllErrorState(e.message!));
+    }
   }
 
 //pick image

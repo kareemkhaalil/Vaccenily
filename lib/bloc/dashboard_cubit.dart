@@ -93,6 +93,39 @@ class DashboardCubit extends Cubit<DashboardState> {
   //     print('data is error');
   //   }
   // }
+  Future<void> fetchData() async {
+    final adminData = await adminCubit.getUser();
+    final allAdminsData = await adminCubit.getAllUsers();
+
+    await Future.wait([
+      iconsCubit.getIconsData(),
+      tagsCubit.getAllTagsData(),
+      articlesCubit.getAllArticles(),
+    ]);
+
+    final iconsState = iconsCubit.state;
+    final tagsState = tagsCubit.state;
+    final articlesState = articlesCubit.state;
+
+    if (adminCubit.state is AdminsLoaded &&
+        iconsState is IconsLoaded &&
+        tagsState is TagsLoaded &&
+        articlesState is ArticlesLoaded) {
+      emit(DashboardDataLoaded(
+        loggedInAdmin: adminData,
+        adminData: allAdminsData,
+        iconsData: iconsState.iconsData,
+        tagsData: tagsState.tagsData,
+        articlesData: articlesState.articles,
+      ));
+    } else {
+      print('Error in data:');
+      print('adminCubit.state: ${adminCubit.state}');
+      print('iconsState: $iconsState');
+      print('tagsState: $tagsState');
+      print('articlesState: $articlesState');
+    }
+  }
 
   var sliderSmall = 0.05;
   double xOffset = 60;

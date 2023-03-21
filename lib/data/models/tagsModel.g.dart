@@ -2,23 +2,17 @@
 
 part of 'tagsModel.dart';
 
-// ***************************************************************************
+// **************************************************************************
 // JsonSerializableGenerator
-// final String id;
-// final String title;
-// final String image;
-// final String aId;
-// final int articleCount;
-// ***************************************************************************
-TagsModel _$TagsModelFromJson(Map<String, dynamic> json) {
-  return TagsModel(
-    json['id'] as String,
-    json['title'] as String,
-    json['image'] as String,
-    json['aId'] as String,
-    json['articleCount'] as int,
-  );
-}
+// **************************************************************************
+
+TagsModel _$TagsModelFromJson(Map<String, dynamic> json) => TagsModel(
+      json['id'] as String,
+      json['title'] as String,
+      json['image'] as String,
+      json['aId'] as String,
+      json['articleCount'] as int,
+    );
 
 Map<String, dynamic> _$TagsModelToJson(TagsModel instance) => <String, dynamic>{
       'id': instance.id,

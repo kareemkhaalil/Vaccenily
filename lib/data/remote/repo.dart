@@ -48,12 +48,9 @@ class Repository {
   }
 
   // استدعاء بيانات المشرف الذي سجل دخوله في التطبيق حالا
-  Future<AdminModel> getCurrentAdmin() async {
-    User? currentUser = getCurrentUser();
-
-    String adminId = currentUser!.uid;
+  Future<AdminModel> getCurrentAdmin(String adminId) async {
     // تأكيد وجود معرّف المشرف
-    if (currentUser == null) {
+    if (adminId == null) {
       throw Exception('معرّف المشرف غير موجود');
     }
     // الحصول على مرجع المستند المطلوب استرجاعه

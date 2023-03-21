@@ -9,7 +9,24 @@ class ArticlesModel {
   final String body;
   final String aid;
   final List<String>? image;
-  final List<String>? tags;
+  List<String> tags;
+  ArticlesModel copyWith({
+    String? id,
+    String? title,
+    String? body,
+    String? aid,
+    List<String>? image,
+    List<String>? tags,
+  }) {
+    return ArticlesModel(
+      body ?? this.body,
+      aid ?? this.aid,
+      image ?? this.image,
+      tags ?? this.tags,
+      id ?? this.id,
+      title ?? this.title,
+    );
+  }
 
   ArticlesModel(
       this.body, this.aid, this.image, this.tags, this.id, this.title);

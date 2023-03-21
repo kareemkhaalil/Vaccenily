@@ -11,7 +11,7 @@ ArticlesModel _$ArticlesModelFromJson(Map<String, dynamic> json) =>
       json['body'] as String,
       json['aid'] as String,
       (json['image'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
       json['id'] as String,
       json['title'] as String,
     );
