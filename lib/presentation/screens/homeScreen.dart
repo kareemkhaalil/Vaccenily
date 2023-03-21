@@ -7,6 +7,7 @@ import 'package:dashborad/bloc/tags/tags_cubit.dart';
 import 'package:dashborad/data/local/constans/appColors.dart';
 import 'package:dashborad/data/local/constans/appImages.dart';
 import 'package:dashborad/data/models/adminModel.dart';
+import 'package:dashborad/data/remote/repo.dart';
 
 import 'package:dashborad/presentation/wedgits/auth/custom_auth_text_form.dart';
 import 'package:dashborad/presentation/wedgits/custom_scaffold.dart';
@@ -17,19 +18,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  final AdminCubit adminCubit;
+
+  HomeScreen({Key? key, required this.adminCubit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final dashboardCubit = context.read<DashboardCubit>();
     var screenSize = MediaQuery.of(context).size;
+    final repository = Repository();
+
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AdminCubit(),
+            create: (context) => AdminCubit(repository),
           ),
           BlocProvider(
-            create: (context) => ArticlestCubit(),
+            create: (context) => ArticlesCubit(repository),
           ),
           BlocProvider(
             create: (context) => IconsCubit(),
@@ -42,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               adminCubit: context.read<AdminCubit>(),
               iconsCubit: context.read<IconsCubit>(),
               tagsCubit: context.read<TagsCubit>(),
-              articlesCubit: context.read<ArticlestCubit>(),
+              articlesCubit: context.read<ArticlesCubit>(),
               uid: FirebaseAuth.instance.currentUser!.uid,
             ),
           ),
@@ -54,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                 future: dashboardCubit.fetchData(),
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (snapshot.hasData == false) {
+                  if (state is DashboardDataLoaded) {
                     var cubit = DashboardCubit.get(context);
                     return CustomScaffold(
                       child: SingleChildScrollView(
