@@ -36,7 +36,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   final AdminCubit adminCubit;
   final IconsCubit iconsCubit;
   final TagsCubit tagsCubit;
-  final ArticlestCubit articlesCubit;
+  final ArticlesCubit articlesCubit;
   String uid;
   StreamController<AdminModel> adminModelController =
       StreamController<AdminModel>.broadcast();
@@ -55,43 +55,44 @@ class DashboardCubit extends Cubit<DashboardState> {
   //   }
   // }
 
-  Future<void> fetchData() async {
-    // استدعاء دوال الحصول على البيانات من الـcubits الأخرى
-    final adminData = await adminCubit.getData();
-    final allAdminsData = await adminCubit.getAllUsers();
-
-    // استخدم Future.wait للتأكد من أن جميع الطلبات قد انتهت قبل الانتقال إلى الخطوة التالية
-    await Future.wait([
-      iconsCubit.getIconsData(),
-      tagsCubit.getAllTagsData(),
-      articlesCubit.getAllArticles(),
-    ]);
-
-    // تحقق من حالات الـcubits الأخرى بعد الانتهاء من تحميل البيانات
-    final iconsState = iconsCubit.state;
-    final tagsState = tagsCubit.state;
-    final articlesState = articlesCubit.state;
-    print('iconsState: $iconsState');
-    print('tagsState: $tagsState');
-    print('articlesState: $articlesState');
-
-    if (adminData != null &&
-        iconsState is IconsLoaded &&
-        tagsState is TagsLoaded &&
-        articlesState is ArticlesLoaded) {
-      emit(DashboardDataLoaded(
-        loggedInAdmin: adminData,
-        adminData: allAdminsData,
-        iconsData: iconsState.iconsData,
-        tagsData: tagsState.tagsData,
-        articlesData: articlesState.articlesData,
-      ));
-      print('data is loaded');
-      print('admin data is ${adminData.name}');
-    } else {
-      print('error in data');
-    }
-  }
+  // Future<void> fetchData() async {
+  //   // استدعاء دوال الحصول على البيانات من الـcubits الأخرى
+  //   final adminData = await adminCubit.getUser();
+  //   final allAdminsData = await adminCubit.getAllUsers();
+  //
+  //   // استخدم Future.wait للتأكد من أن جميع الطلبات قد انتهت قبل الانتقال إلى الخطوة التالية
+  //   await Future.wait([
+  //     iconsCubit.getIconsData(),
+  //     tagsCubit.getAllTagsData(),
+  //     articlesCubit.getAllArticles(),
+  //   ]);
+  //
+  //   // تحقق من حالات الـcubits الأخرى بعد الانتهاء من تحميل البيانات
+  //   final iconsState = iconsCubit.state;
+  //   final tagsState = tagsCubit.state;
+  //   final articlesState = articlesCubit.state;
+  //   print('iconsState: $iconsState');
+  //   print('tagsState: $tagsState');
+  //   print('articlesState: $articlesState');
+  //
+  //   if (adminCubit.state is AdminUserUpdated) {
+  //     emit(DashboardDataLoaded(
+  //       loggedInAdmin: adminData,
+  //       adminData: allAdminsData,
+  //       // iconsData: iconsState.iconsData,
+  //       // tagsData: tagsState.tagsData,
+  //       // articlesData: articlesState.articles,
+  //     ));
+  //     print('data is loaded');
+  //     print('admin data is ${adminData}');
+  //   } else if (adminCubit.state is AdminInitial) {
+  //     print('data is initial');
+  //   } else if (adminCubit.state is AdminUserUpdating) {
+  //     print('data is loading');
+  //   } else {
+  //     print('data is error');
+  //   }
+  // }
 
   var sliderSmall = 0.05;
   double xOffset = 60;
@@ -199,7 +200,6 @@ class DashboardCubit extends Cubit<DashboardState> {
     articlesOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 0;
-    AdminCubit().getUserData(Constants().adminUID.toString());
     print(Constants().adminUID.toString());
     emit(OpenAdminState());
   }
