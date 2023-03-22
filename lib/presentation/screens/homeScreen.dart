@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dashborad/bloc/admin/admin_cubit.dart';
 import 'package:dashborad/bloc/articles/articlest_cubit.dart';
@@ -1465,11 +1466,20 @@ class HomeScreen extends StatelessWidget {
                                                           radius:
                                                               screenSize.width *
                                                                   0.2,
-                                                          backgroundImage:
-                                                              NetworkImage(
-                                                            state.loggedInAdmin
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl: state
+                                                                .loggedInAdmin
                                                                 .image
                                                                 .trim(),
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                CircularProgressIndicator(),
+                                                            errorWidget:
+                                                                (context, url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error),
                                                           ),
                                                         ),
                                                 ],

@@ -112,18 +112,20 @@ class DashboardCubit extends Cubit<DashboardState> {
           iconsState is IconsLoaded &&
           tagsState is TagsLoaded &&
           articlesState is ArticlesLoaded) {
-        emit(DashboardDataLoaded(
-          loggedInAdmin: adminData,
-          adminData: allAdminsData,
-          iconsData: iconsState.iconsData,
-          tagsData: tagsState.tagsData,
-          articlesData: articlesState.articles,
-        ));
+        if (!this.isClosed) {
+          emit(DashboardDataLoaded(
+            loggedInAdmin: adminData,
+            adminData: allAdminsData,
+            iconsData: iconsState.iconsData,
+            tagsData: tagsState.tagsData,
+            articlesData: articlesState.articles,
+          ));
+        }
       } else {
         _handleError(adminCubit.state, iconsState, tagsState, articlesState);
       }
-    } catch (e) {
-      emit(DashboardErrorState(error: 'Failed to load data.'));
+    } on FirebaseException catch (e) {
+      emit(DashboardErrorState(error: e.message!));
     }
   }
 

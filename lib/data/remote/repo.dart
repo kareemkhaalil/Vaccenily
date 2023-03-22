@@ -3,6 +3,7 @@ import 'package:dashborad/data/models/adminModel.dart';
 import 'package:dashborad/data/models/articlesModel.dart';
 import 'package:dashborad/data/models/iconsModel.dart';
 import 'package:dashborad/data/models/tagsModel.dart';
+import 'package:dashborad/data/remote/authRepo.dart';
 import 'package:dashborad/data/remote/fireAuth.dart';
 import 'package:file/file.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +12,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 class Repository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final Auth _auth = Auth();
+  final AuthRepository _authRepository = AuthRepository();
 
   /// Admin Functions ///
   // إضافة مشرف جديد
@@ -48,6 +49,24 @@ class Repository {
   }
 
   // استدعاء بيانات المشرف الذي سجل دخوله في التطبيق حالا
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getUserData(
+      String email) async {
+    try {
+      DocumentReference userRef = _firestore.collection('users').doc(email);
+      DocumentSnapshot<Map<String, dynamic>>? userDoc =
+          (await userRef.get()) as DocumentSnapshot<Map<String, dynamic>>?;
+
+      if (userDoc!.exists) {
+        return userDoc;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      // يمكنك التعامل مع الأخطاء هنا
+      return null;
+    }
+  }
+
   Future<AdminModel> getCurrentAdmin(String adminId) async {
     // تأكيد وجود معرّف المشرف
     if (adminId == null) {
@@ -277,6 +296,6 @@ class Repository {
 
   /// ِAuth ///
   User? getCurrentUser() {
-    return _auth.getCurrentUser();
+    return _authRepository.getCurrentUser();
   }
 }

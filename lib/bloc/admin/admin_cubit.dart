@@ -61,7 +61,7 @@ class AdminCubit extends Cubit<AdminState> {
       var user = await _repository.getCurrentAdmin(adminId);
       emit(AdminUserLoaded());
       return user;
-    } catch (e) {
+    } on FirebaseException catch (e) {
       emit(AdminUserLoadFailed(e.toString()));
     }
   }

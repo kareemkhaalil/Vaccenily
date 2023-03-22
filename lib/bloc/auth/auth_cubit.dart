@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dashborad/bloc/admin/admin_cubit.dart';
+import 'package:dashborad/data/local/hive/hiveServices.dart';
 import 'package:dashborad/data/remote/fireAuth.dart';
 import 'package:dashborad/presentation/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final AdminCubit adminCubit;
+  final hiveService = HiveService();
 
   AuthCubit(this._fireAuth, this.adminCubit) : super(AuthInitial());
 

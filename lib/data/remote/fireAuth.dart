@@ -1,7 +1,10 @@
+import 'package:dashborad/data/local/hive/hiveServices.dart';
+import 'package:dashborad/data/models/userHiveModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final HiveService _hiveService = HiveService();
 
 // تسجيل الدخول
   Future<User?> signInWithEmailAndPassword(
@@ -12,6 +15,12 @@ class Auth {
         email: email,
         password: password,
       );
+      await _hiveService.saveUser(UserHive(
+        email: email,
+        password: password,
+        id: userCredential.user!.uid,
+      ));
+
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       // يمكنك التعامل مع الأخطاء هنا

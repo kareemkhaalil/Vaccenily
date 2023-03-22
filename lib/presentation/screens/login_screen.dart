@@ -22,9 +22,15 @@ class LoginScreen extends StatelessWidget {
 
     var screenSize = MediaQuery.of(context).size;
     final Auth auth = Auth();
-    final adminCubit = AdminCubit(repository);
-    return BlocProvider(
-      create: (context) => AuthCubit(auth, adminCubit),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AdminCubit>(
+          create: (context) => AdminCubit(repository),
+        ),
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(auth, context.read<AdminCubit>()),
+        ),
+      ],
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {},
         builder: (context, state) {
