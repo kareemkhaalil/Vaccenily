@@ -153,7 +153,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   ArticlesModel? articleModel;
 
   bool isDark = false;
-  CarouselController buttonCarouselController = CarouselController();
+  final CarouselController buttonCarouselController = CarouselController();
 
   PageController? pageController;
 
@@ -168,16 +168,47 @@ class DashboardCubit extends Cubit<DashboardState> {
   ];
   int activePageIndex = 0;
 
-  void slideBar() {
+  void slideBar(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
     if (sliderSmall == 0.05 || scalX == 0.00051) {
       sliderSmall = 0.13;
       scalX = 0.000483;
-      emit(OpenSideBar());
+      emit(OpenSideBar(
+          loggedInAdmin: loggedInAdmin,
+          adminData: adminData,
+          iconsData: iconsData,
+          tagsData: tagsData,
+          articlesData: articlesData));
+      emit(DashboardDataLoaded(
+          loggedInAdmin: loggedInAdmin,
+          adminData: adminData,
+          iconsData: iconsData,
+          tagsData: tagsData,
+          articlesData: articlesData));
+
       print('slider is open');
     } else {
       sliderSmall = 0.05;
       scalX = 0.000527;
       emit(CloseSideBar());
+      emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData,
+      ));
+      emit(DashboardDataLoaded(
+          loggedInAdmin: loggedInAdmin,
+          adminData: adminData,
+          iconsData: iconsData,
+          tagsData: tagsData,
+          articlesData: articlesData));
       print('slider is close');
     }
   }
@@ -229,57 +260,142 @@ class DashboardCubit extends Cubit<DashboardState> {
   }
 
   void changePage(int index) {
-    buttonCarouselController.animateToPage(
-      index,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-    emit(ChangePageState());
+    if (index != null) {
+      buttonCarouselController.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.ease);
+    } else {
+      print('Error: index passed to changePage is null');
+    }
   }
 
-  void openAdmin(context) {
+  void openAdmin(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
     adminOpacity = 1;
     tagsOpacity = 0;
     articlesOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 0;
     print(Constants().adminUID.toString());
-    emit(OpenAdminState());
+    emit(OpenAdminState(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
+    emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
   }
 
-  void openTags(context) {
+  void openTags(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
     adminOpacity = 0;
     tagsOpacity = 1;
     articlesOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 0;
-    emit(OpenTagsState());
+    emit(OpenTagsState(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
+    emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
   }
 
-  void openArticles(context) {
+  void openArticles(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
     adminOpacity = 0;
     tagsOpacity = 0;
     articlesOpacity = 1;
     iconsOpacity = 0;
     dashboardOpacity = 0;
-    emit(OpenArticlesState());
+    emit(OpenArticlesState(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
+    emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
   }
 
-  void openIcons(context) {
+  void openIcons(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
     adminOpacity = 0;
     tagsOpacity = 0;
     articlesOpacity = 0;
     iconsOpacity = 1;
     dashboardOpacity = 0;
-    emit(OpenIconsState());
+    emit(OpenIconsState(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
+    emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
   }
 
-  void openDashboard(context) {
+  void openDashboard(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
     adminOpacity = 0;
     tagsOpacity = 0;
     articlesOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 1;
-    emit(OpenDashboardState());
+    emit(OpenDashboardState(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
+    emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
   }
 }

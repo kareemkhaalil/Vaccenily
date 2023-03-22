@@ -34,7 +34,23 @@ class AppThemeModeLight extends DashboardState {}
 
 class AppThemeModeDark extends DashboardState {}
 
-class OpenSideBar extends DashboardState {}
+class OpenSideBar extends DashboardState {
+  final List<AdminModel> adminData;
+  final List<IconsModel> iconsData;
+  final List<TagsModel> tagsData;
+  final List<ArticlesModel> articlesData;
+  final AdminModel loggedInAdmin;
+
+  const OpenSideBar({
+    required this.loggedInAdmin,
+    required this.adminData,
+    required this.iconsData,
+    required this.tagsData,
+    required this.articlesData,
+  });
+  List<Object> get props =>
+      [adminData, iconsData, tagsData, articlesData, loggedInAdmin];
+}
 
 class CloseSideBar extends DashboardState {}
 
@@ -44,15 +60,95 @@ class NextPageState extends DashboardState {}
 
 class PreviousPageState extends DashboardState {}
 
-class OpenAdminState extends DashboardState {}
+class OpenAdminState extends DashboardState {
+  final List<AdminModel> adminData;
+  final List<IconsModel> iconsData;
+  final List<TagsModel> tagsData;
+  final List<ArticlesModel> articlesData;
+  final AdminModel loggedInAdmin;
 
-class OpenArticlesState extends DashboardState {}
+  const OpenAdminState({
+    required this.loggedInAdmin,
+    required this.adminData,
+    required this.iconsData,
+    required this.tagsData,
+    required this.articlesData,
+  });
+  List<Object> get props =>
+      [adminData, iconsData, tagsData, articlesData, loggedInAdmin];
+}
 
-class OpenTagsState extends DashboardState {}
+class OpenArticlesState extends DashboardState {
+  final List<AdminModel> adminData;
+  final List<IconsModel> iconsData;
+  final List<TagsModel> tagsData;
+  final List<ArticlesModel> articlesData;
+  final AdminModel loggedInAdmin;
 
-class OpenIconsState extends DashboardState {}
+  const OpenArticlesState({
+    required this.loggedInAdmin,
+    required this.adminData,
+    required this.iconsData,
+    required this.tagsData,
+    required this.articlesData,
+  });
+  List<Object> get props =>
+      [adminData, iconsData, tagsData, articlesData, loggedInAdmin];
+}
 
-class OpenDashboardState extends DashboardState {}
+class OpenTagsState extends DashboardState {
+  final List<AdminModel> adminData;
+  final List<IconsModel> iconsData;
+  final List<TagsModel> tagsData;
+  final List<ArticlesModel> articlesData;
+  final AdminModel loggedInAdmin;
+
+  const OpenTagsState({
+    required this.loggedInAdmin,
+    required this.adminData,
+    required this.iconsData,
+    required this.tagsData,
+    required this.articlesData,
+  });
+  List<Object> get props =>
+      [adminData, iconsData, tagsData, articlesData, loggedInAdmin];
+}
+
+class OpenIconsState extends DashboardState {
+  final List<AdminModel> adminData;
+  final List<IconsModel> iconsData;
+  final List<TagsModel> tagsData;
+  final List<ArticlesModel> articlesData;
+  final AdminModel loggedInAdmin;
+
+  const OpenIconsState({
+    required this.loggedInAdmin,
+    required this.adminData,
+    required this.iconsData,
+    required this.tagsData,
+    required this.articlesData,
+  });
+  List<Object> get props =>
+      [adminData, iconsData, tagsData, articlesData, loggedInAdmin];
+}
+
+class OpenDashboardState extends DashboardState {
+  final List<AdminModel> adminData;
+  final List<IconsModel> iconsData;
+  final List<TagsModel> tagsData;
+  final List<ArticlesModel> articlesData;
+  final AdminModel loggedInAdmin;
+
+  const OpenDashboardState({
+    required this.loggedInAdmin,
+    required this.adminData,
+    required this.iconsData,
+    required this.tagsData,
+    required this.articlesData,
+  });
+  List<Object> get props =>
+      [adminData, iconsData, tagsData, articlesData, loggedInAdmin];
+}
 
 class DashboardLoading extends DashboardState {}
 
