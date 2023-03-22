@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
                       color: Colors.transparent,
                       height: screenSize.height * 0.1,
-                      width: screenSize.width * 0.06,
+                      width: screenSize.width * 0.05,
                       child: CircularProgressIndicator(
                         color: AppColors.backgroundColor,
                       ),
@@ -1468,7 +1468,8 @@ class HomeScreen extends StatelessWidget {
                                                           backgroundImage:
                                                               NetworkImage(
                                                             state.loggedInAdmin
-                                                                .image,
+                                                                .image
+                                                                .trim(),
                                                           ),
                                                         ),
                                                 ],
