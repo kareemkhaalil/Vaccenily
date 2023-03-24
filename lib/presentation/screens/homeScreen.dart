@@ -1472,16 +1472,17 @@ class HomeScreen extends StatelessWidget {
                                                                       String>
                                                                   snapshot) {
                                                             return CircleAvatar(
-                                                              radius: screenSize
-                                                                      .width *
-                                                                  0.05,
-                                                              backgroundImage:
-                                                                  NetworkImage(
-                                                                AppImages
-                                                                    .backGround,
-                                                              ),
-                                                              child: Center(
-                                                                child: ClipOval(
+                                                                radius: screenSize
+                                                                        .width *
+                                                                    0.05,
+                                                                backgroundImage:
+                                                                    NetworkImage(
+                                                                  AppImages
+                                                                      .backGround,
+                                                                ),
+                                                                child: Center(
+                                                                    child:
+                                                                        ClipOval(
                                                                   child: SizedBox
                                                                       .fromSize(
                                                                     size: Size
@@ -1490,37 +1491,16 @@ class HomeScreen extends StatelessWidget {
                                                                               .width *
                                                                           0.04,
                                                                     ),
-                                                                    child: FutureBuilder<
-                                                                            String>(
-                                                                        future: cubit
-                                                                            .loadImage(
-                                                                          state
-                                                                              .loggedInAdmin
-                                                                              .image,
-                                                                        ),
-                                                                        builder: (BuildContext
-                                                                                context,
-                                                                            AsyncSnapshot<String>
-                                                                                snapshot) {
-                                                                          if (snapshot.connectionState ==
-                                                                              ConnectionState.waiting) {
-                                                                            return CircularProgressIndicator();
-                                                                          } else if (snapshot.hasError) {
-                                                                            print(snapshot.error.toString());
-                                                                          }
-                                                                          return CachedNetworkImage(
-                                                                            imageUrl:
-                                                                                state.loggedInAdmin.image.toString(),
-                                                                            placeholder: (context, url) =>
-                                                                                CircularProgressIndicator(),
-                                                                            errorWidget: (context, url, error) =>
-                                                                                Icon(Icons.error),
-                                                                          );
-                                                                        }),
+                                                                    child: snapshot.connectionState ==
+                                                                            ConnectionState.waiting
+                                                                        ? CircularProgressIndicator()
+                                                                        : snapshot.hasError
+                                                                            ? Text(snapshot.error.toString())
+                                                                            : Image.network(
+                                                                                state.loggedInAdmin.image,
+                                                                              ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                            );
+                                                                )));
                                                           }),
                                                   SizedBox(
                                                     height:
