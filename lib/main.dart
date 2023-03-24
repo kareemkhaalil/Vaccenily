@@ -25,7 +25,7 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Bloc.observer = MyBlocObserver();
   final repository = Repository();
-  await Hive.initFlutter('Vaccenily Dashboard');
+  await Hive.initFlutter();
   Hive.registerAdapter<UserHive>(UserHiveAdapter());
   runApp(MyApp(
     adminCubit: AdminCubit(repository),

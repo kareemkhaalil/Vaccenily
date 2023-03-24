@@ -139,6 +139,11 @@ class DashboardCubit extends Cubit<DashboardState> {
     emit(DashboardErrorState(error: 'Failed to load data.'));
   }
 
+  Future<String> loadImage(String imageUrl) async {
+    await Future.delayed(Duration(milliseconds: 200));
+    return imageUrl;
+  }
+
   var sliderSmall = 0.05;
   double xOffset = 60;
   double yOffset = 0;

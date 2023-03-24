@@ -13,7 +13,6 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final AdminCubit adminCubit;
-  final hiveService = HiveService();
 
   AuthCubit(this._fireAuth, this.adminCubit) : super(AuthInitial());
 

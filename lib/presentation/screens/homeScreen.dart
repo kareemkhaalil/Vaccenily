@@ -1443,11 +1443,10 @@ class HomeScreen extends StatelessWidget {
                                             width: screenSize.width / 3,
                                             height: screenSize.height,
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
+                                              padding: const EdgeInsets.all(
+                                                25,
+                                              ),
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
                                                 children: [
@@ -1462,26 +1461,262 @@ class HomeScreen extends StatelessWidget {
                                                                   .primaryColor,
                                                           child: Icon(Icons
                                                               .person_rounded))
-                                                      : CircleAvatar(
-                                                          radius:
-                                                              screenSize.width *
-                                                                  0.2,
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl: state
-                                                                .loggedInAdmin
-                                                                .image
-                                                                .trim(),
-                                                            placeholder: (context,
-                                                                    url) =>
-                                                                CircularProgressIndicator(),
-                                                            errorWidget:
-                                                                (context, url,
-                                                                        error) =>
-                                                                    Icon(Icons
-                                                                        .error),
-                                                          ),
+                                                      : FutureBuilder<String>(
+                                                          future: cubit
+                                                              .loadImage(state
+                                                                  .loggedInAdmin
+                                                                  .image),
+                                                          builder: (BuildContext
+                                                                  context,
+                                                              AsyncSnapshot<
+                                                                      String>
+                                                                  snapshot) {
+                                                            return CircleAvatar(
+                                                              radius: screenSize
+                                                                      .width *
+                                                                  0.05,
+                                                              backgroundImage:
+                                                                  NetworkImage(
+                                                                AppImages
+                                                                    .backGround,
+                                                              ),
+                                                              child: Center(
+                                                                child: ClipOval(
+                                                                  child: SizedBox
+                                                                      .fromSize(
+                                                                    size: Size
+                                                                        .fromRadius(
+                                                                      screenSize
+                                                                              .width *
+                                                                          0.04,
+                                                                    ),
+                                                                    child: FutureBuilder<
+                                                                            String>(
+                                                                        future: cubit
+                                                                            .loadImage(
+                                                                          state
+                                                                              .loggedInAdmin
+                                                                              .image,
+                                                                        ),
+                                                                        builder: (BuildContext
+                                                                                context,
+                                                                            AsyncSnapshot<String>
+                                                                                snapshot) {
+                                                                          if (snapshot.connectionState ==
+                                                                              ConnectionState.waiting) {
+                                                                            return CircularProgressIndicator();
+                                                                          } else if (snapshot.hasError) {
+                                                                            print(snapshot.error.toString());
+                                                                          }
+                                                                          return CachedNetworkImage(
+                                                                            imageUrl:
+                                                                                state.loggedInAdmin.image.toString(),
+                                                                            placeholder: (context, url) =>
+                                                                                CircularProgressIndicator(),
+                                                                            errorWidget: (context, url, error) =>
+                                                                                Icon(Icons.error),
+                                                                          );
+                                                                        }),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }),
+                                                  SizedBox(
+                                                    height:
+                                                        screenSize.height * 0.1,
+                                                  ),
+                                                  Text(
+                                                    state.loggedInAdmin.name,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      GlassmorphismContainer(
+                                                        width:
+                                                            screenSize.width *
+                                                                0.08,
+                                                        height:
+                                                            screenSize.height *
+                                                                0.22,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              state
+                                                                  .loggedInAdmin
+                                                                  .postsCount
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                fontSize: 22,
+                                                                fontFamily: GoogleFonts
+                                                                        .cairo()
+                                                                    .fontFamily,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w900,
+                                                                color: AppColors
+                                                                    .backgroundColor,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: screenSize
+                                                                      .height *
+                                                                  0.03,
+                                                            ),
+                                                            Text(
+                                                              'Articles',
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontFamily: GoogleFonts
+                                                                        .cairo()
+                                                                    .fontFamily,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: AppColors
+                                                                    .backgroundColor
+                                                                    .withOpacity(
+                                                                  0.7,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            screenSize.width *
+                                                                0.02,
+                                                      ),
+                                                      GlassmorphismContainer(
+                                                        width:
+                                                            screenSize.width *
+                                                                0.08,
+                                                        height:
+                                                            screenSize.height *
+                                                                0.22,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              state
+                                                                  .loggedInAdmin
+                                                                  .iconssCount
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                fontSize: 22,
+                                                                fontFamily: GoogleFonts
+                                                                        .cairo()
+                                                                    .fontFamily,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w900,
+                                                                color: AppColors
+                                                                    .backgroundColor,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: screenSize
+                                                                      .height *
+                                                                  0.03,
+                                                            ),
+                                                            Text(
+                                                              'Icons',
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontFamily: GoogleFonts
+                                                                        .cairo()
+                                                                    .fontFamily,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: AppColors
+                                                                    .backgroundColor
+                                                                    .withOpacity(
+                                                                  0.7,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            screenSize.width *
+                                                                0.02,
+                                                      ),
+                                                      GlassmorphismContainer(
+                                                        width:
+                                                            screenSize.width *
+                                                                0.08,
+                                                        height:
+                                                            screenSize.height *
+                                                                0.22,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              state
+                                                                  .loggedInAdmin
+                                                                  .tagsCount
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                fontSize: 22,
+                                                                fontFamily: GoogleFonts
+                                                                        .cairo()
+                                                                    .fontFamily,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w900,
+                                                                color: AppColors
+                                                                    .backgroundColor,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: screenSize
+                                                                      .height *
+                                                                  0.03,
+                                                            ),
+                                                            Text(
+                                                              'Tags',
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontFamily: GoogleFonts
+                                                                        .cairo()
+                                                                    .fontFamily,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: AppColors
+                                                                    .backgroundColor
+                                                                    .withOpacity(
+                                                                  0.7,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ],
                                               ),
                                             ),

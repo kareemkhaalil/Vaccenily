@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "1047386374539",
+    "firebase_url": "https://vaccenily-default-rtdb.firebaseio.com",
+    "project_id": "vaccenily",
+    "storage_bucket": "vaccenily.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047386374539:android:638f3a6beb373ab85a6f8e",
+        "android_client_info": {
+          "package_name": "com.example.dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047386374539-hqq0e2km7ug90lt5kljt7m62mraqm3v1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbU39QBD1Y20QReG9wC0TQ50JIMLylWrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047386374539-hqq0e2km7ug90lt5kljt7m62mraqm3v1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1047386374539-364s18gk2e0ld1t21570irsh3rv6nmjr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dashboard"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047386374539:android:8194fbd2e6e74b285a6f8e",
+        "android_client_info": {
+          "package_name": "com.example.dashborad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047386374539-hqq0e2km7ug90lt5kljt7m62mraqm3v1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbU39QBD1Y20QReG9wC0TQ50JIMLylWrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047386374539-hqq0e2km7ug90lt5kljt7m62mraqm3v1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1047386374539-364s18gk2e0ld1t21570irsh3rv6nmjr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dashboard"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

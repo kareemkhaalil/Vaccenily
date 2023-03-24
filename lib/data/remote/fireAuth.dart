@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:dashborad/data/local/hive/hiveServices.dart';
 import 'package:dashborad/data/models/userHiveModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,7 +25,7 @@ class Auth {
 
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      // يمكنك التعامل مع الأخطاء هنا
+      print(e.message);
       return null;
     }
   }
