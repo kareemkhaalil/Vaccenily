@@ -33,6 +33,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   }) : super(DashboardInitial());
 
   static DashboardCubit get(context) => BlocProvider.of(context);
+
   final AdminCubit adminCubit;
   final IconsCubit iconsCubit;
   final TagsCubit tagsCubit;
@@ -147,17 +148,23 @@ class DashboardCubit extends Cubit<DashboardState> {
   var sliderSmall = 0.05;
   double xOffset = 60;
   double yOffset = 0;
-  double scalX = 0.000527;
+  double scalX = 0.00052;
   bool sidebarOpen = false;
   double? adminOpacity = 0;
   double? tagsOpacity = 0;
   double? articlesOpacity = 0;
   double? iconsOpacity = 0;
   double? dashboardOpacity = 1;
+  double? addAdminOpacity = 0;
+  double? allAdminsOpacity = 0;
+  double? adminButtonOpacity = 0;
   AdminModel? adminModel;
   TagsModel? tagsModel;
   IconsModel? iconsModel;
   ArticlesModel? articleModel;
+  TextFormField? addAdminEmail;
+  TextFormField? addAdminUserNamel;
+  TextFormField? addAdminPass;
 
   bool isDark = false;
   final CarouselController buttonCarouselController = CarouselController();
@@ -182,7 +189,7 @@ class DashboardCubit extends Cubit<DashboardState> {
       List<TagsModel> tagsData,
       List<IconsModel> iconsData,
       List<ArticlesModel> articlesData) {
-    if (sliderSmall == 0.05 || scalX == 0.00051) {
+    if (sliderSmall == 0.05 || scalX == 0.00052) {
       sliderSmall = 0.13;
       scalX = 0.000483;
       emit(OpenSideBar(
@@ -201,7 +208,7 @@ class DashboardCubit extends Cubit<DashboardState> {
       print('slider is open');
     } else {
       sliderSmall = 0.05;
-      scalX = 0.000527;
+      scalX = 0.00052;
       emit(CloseSideBar());
       emit(DashboardDataLoaded(
         loggedInAdmin: loggedInAdmin,
@@ -283,10 +290,13 @@ class DashboardCubit extends Cubit<DashboardState> {
       List<IconsModel> iconsData,
       List<ArticlesModel> articlesData) {
     adminOpacity = 1;
+    adminButtonOpacity = 1;
     tagsOpacity = 0;
     articlesOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 0;
+    addAdminOpacity = 0;
+    allAdminsOpacity = 0;
     print(Constants().adminUID.toString());
     emit(OpenAdminState(
         loggedInAdmin: loggedInAdmin,
@@ -311,6 +321,7 @@ class DashboardCubit extends Cubit<DashboardState> {
       List<ArticlesModel> articlesData) {
     adminOpacity = 0;
     tagsOpacity = 1;
+    adminButtonOpacity = 0;
     articlesOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 0;
@@ -338,6 +349,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     adminOpacity = 0;
     tagsOpacity = 0;
     articlesOpacity = 1;
+    adminButtonOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 0;
     emit(OpenArticlesState(
@@ -364,6 +376,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     adminOpacity = 0;
     tagsOpacity = 0;
     articlesOpacity = 0;
+    adminButtonOpacity = 0;
     iconsOpacity = 1;
     dashboardOpacity = 0;
     emit(OpenIconsState(
@@ -392,6 +405,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     articlesOpacity = 0;
     iconsOpacity = 0;
     dashboardOpacity = 1;
+    adminButtonOpacity = 0;
     emit(OpenDashboardState(
         loggedInAdmin: loggedInAdmin,
         adminData: adminData,
@@ -404,5 +418,52 @@ class DashboardCubit extends Cubit<DashboardState> {
         iconsData: iconsData,
         tagsData: tagsData,
         articlesData: articlesData));
+  }
+
+  void openAllAdmin(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
+    addAdminOpacity = 0;
+    adminButtonOpacity = 0;
+    allAdminsOpacity = 1;
+
+    print(allAdminsOpacity.toString());
+    print("All Admin Screen ");
+    emit(OpenAllAddAdmin());
+    emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
+    print(state.toString());
+  }
+
+  void addAdmin(
+      context,
+      AdminModel loggedInAdmin,
+      List<AdminModel> adminData,
+      List<TagsModel> tagsData,
+      List<IconsModel> iconsData,
+      List<ArticlesModel> articlesData) {
+    allAdminsOpacity = 0;
+    adminButtonOpacity = 0;
+    addAdminOpacity = 1;
+
+    print(addAdminOpacity.toString());
+    print("Add Admin Screen ");
+
+    emit(OpenAddAdmin());
+    emit(DashboardDataLoaded(
+        loggedInAdmin: loggedInAdmin,
+        adminData: adminData,
+        iconsData: iconsData,
+        tagsData: tagsData,
+        articlesData: articlesData));
+    print(state.toString());
   }
 }

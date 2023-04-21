@@ -8,6 +8,18 @@ abstract class DashboardState extends Equatable {
   List<Object> get props => [];
 }
 
+class OpenAddAdmin extends DashboardState {}
+
+class OpenAllAddAdmin extends DashboardState {}
+
+class OpenAdminButtonState extends DashboardState {}
+
+class CloseAddAdmin extends DashboardState {}
+
+class CloseAllAddAdmin extends DashboardState {}
+
+class CloseAdminButtonState extends DashboardState {}
+
 class DashboardDataLoaded extends DashboardState {
   final List<AdminModel> adminData;
   final List<IconsModel> iconsData;

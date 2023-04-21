@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppThemes {
   static final lightTheme = ThemeData(
     primaryColor: Colors.white,
-    accentColor: Colors.black,
+    hintColor: Colors.black,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
       color: Colors.white,
@@ -25,7 +25,7 @@ class AppThemes {
 
   static final darkTheme = ThemeData(
     primaryColor: Colors.black,
-    accentColor: Colors.white,
+    hintColor: Colors.white,
     scaffoldBackgroundColor: Colors.transparent,
     appBarTheme: AppBarTheme(
       color: Colors.black,

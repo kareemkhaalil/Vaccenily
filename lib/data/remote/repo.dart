@@ -1,13 +1,18 @@
+import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file/file.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:universal_html/html.dart' as html;
+
 import 'package:dashborad/data/models/adminModel.dart';
 import 'package:dashborad/data/models/articlesModel.dart';
 import 'package:dashborad/data/models/iconsModel.dart';
 import 'package:dashborad/data/models/tagsModel.dart';
 import 'package:dashborad/data/remote/authRepo.dart';
 import 'package:dashborad/data/remote/fireAuth.dart';
-import 'package:file/file.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class Repository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -90,6 +95,35 @@ class Repository {
 
     // إرجاع كائن المشرف
     return admin;
+  }
+
+  Future<String> uploadAdminImage(html.File? imageFile, String userId) async {
+    String fileName = 'admins/${DateTime.now().toIso8601String()}.png';
+    Reference ref = _storage.ref().child(fileName);
+
+    final reader = html.FileReader();
+    final completer = Completer<Uint8List>();
+
+    reader.readAsArrayBuffer(imageFile!);
+    reader.onLoadEnd.listen((event) {
+      completer.complete(Uint8List.fromList(reader.result as List<int>));
+    });
+
+    final imageData = await completer.future;
+    UploadTask uploadTask = ref.putData(imageData);
+
+    // انتظر حتى تكتمل عملية الرفع
+    TaskSnapshot taskSnapshot = await uploadTask;
+
+    // احصل على رابط الصورة الموجودة في Firebase Storage
+
+    String imageUrl = await taskSnapshot.ref.getDownloadURL();
+    await _firestore
+        .collection('admins')
+        .doc(userId)
+        .update({'image': imageUrl});
+
+    return imageUrl;
   }
 
   /// Article Fubctions ///

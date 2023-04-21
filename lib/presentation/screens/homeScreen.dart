@@ -9,9 +9,11 @@ import 'package:dashborad/data/local/constans/appColors.dart';
 import 'package:dashborad/data/local/constans/appImages.dart';
 import 'package:dashborad/data/models/adminModel.dart';
 import 'package:dashborad/data/remote/repo.dart';
+import 'package:dashborad/presentation/screens/adminScreen.dart';
 
 import 'package:dashborad/presentation/wedgits/auth/custom_auth_text_form.dart';
 import 'package:dashborad/presentation/wedgits/custom_scaffold.dart';
+import 'package:dashborad/presentation/wedgits/floatingContianer.dart';
 import 'package:dashborad/presentation/wedgits/glassmorphism_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.transparent,
                       height: screenSize.height * 0.1,
                       width: screenSize.width * 0.05,
-                      child: CircularProgressIndicator(
+                      child: const CircularProgressIndicator(
                         color: AppColors.backgroundColor,
                       ),
                     ),
@@ -79,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                 child: GlassmorphismContainer(
                   height: screenSize.height * 0.97,
                   width: screenSize.width * 0.97,
-                  child: CircularProgressIndicator(
+                  child: const CircularProgressIndicator(
                     color: AppColors.backgroundColor,
                   ),
                 ),
@@ -116,168 +118,168 @@ class HomeScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: screenSize.height * 0.07,
-              width: screenSize.width,
-              color: Colors.transparent,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // dashboard
-                    GlassmorphismContainer(
-                      width: screenSize.width * 0.08,
-                      height: screenSize.height * 0.05,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+              ),
+              child: Container(
+                height: screenSize.height * 0.07,
+                width: screenSize.width,
+                color: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // dashboard
+                      GlassmorphismContainer(
+                        width: screenSize.width * 0.08,
+                        height: screenSize.height * 0.05,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          cubit.openDashboard(
-                              context,
-                              state.loggedInAdmin,
-                              state.adminData,
-                              state.tagsData,
-                              state.iconsData,
-                              state.articlesData);
-                        },
-                        child: Text(
-                          'Dashboard',
-                          style: TextStyle(
-                            fontFamily: GoogleFonts.cairo().fontFamily,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.backgroundColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: screenSize.width * 0.01,
-                    ),
-                    // articles
-                    GlassmorphismContainer(
-                      width: screenSize.width * 0.08,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        onPressed: () {
-                          cubit.openArticles(
-                              context,
-                              state.loggedInAdmin,
-                              state.adminData,
-                              state.tagsData,
-                              state.iconsData,
-                              state.articlesData);
-                        },
-                        child: Text(
-                          'Articles',
-                          style: TextStyle(
-                            fontFamily: GoogleFonts.cairo().fontFamily,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.backgroundColor,
+                          onPressed: () {
+                            cubit.openDashboard(
+                                context,
+                                state.loggedInAdmin,
+                                state.adminData,
+                                state.tagsData,
+                                state.iconsData,
+                                state.articlesData);
+                          },
+                          child: Text(
+                            'Dashboard',
+                            style: TextStyle(
+                              fontFamily: GoogleFonts.cairo().fontFamily,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.backgroundColor,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: screenSize.width * 0.01,
-                    ),
-                    // tags
+                      SizedBox(
+                        width: screenSize.width * 0.01,
+                      ),
+                      // articles
+                      GlassmorphismContainer(
+                        width: screenSize.width * 0.08,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onPressed: () {
+                            cubit.openArticles(
+                                context,
+                                state.loggedInAdmin,
+                                state.adminData,
+                                state.tagsData,
+                                state.iconsData,
+                                state.articlesData);
+                          },
+                          child: Text(
+                            'Articles',
+                            style: TextStyle(
+                              fontFamily: GoogleFonts.cairo().fontFamily,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.backgroundColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: screenSize.width * 0.01,
+                      ),
+                      // tags
 
-                    GlassmorphismContainer(
-                      width: screenSize.width * 0.08,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                      GlassmorphismContainer(
+                        width: screenSize.width * 0.08,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          cubit.openTags(
-                              context,
-                              state.loggedInAdmin,
-                              state.adminData,
-                              state.tagsData,
-                              state.iconsData,
-                              state.articlesData);
-                        },
-                        child: Text(
-                          'Tags',
-                          style: TextStyle(
-                            fontFamily: GoogleFonts.cairo().fontFamily,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.backgroundColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: screenSize.width * 0.01,
-                    ),
-                    // icons
-                    GlassmorphismContainer(
-                      width: screenSize.width * 0.08,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        onPressed: () {
-                          cubit.openIcons(
-                              context,
-                              state.loggedInAdmin,
-                              state.adminData,
-                              state.tagsData,
-                              state.iconsData,
-                              state.articlesData);
-                        },
-                        child: Text(
-                          'Icons',
-                          style: TextStyle(
-                            fontFamily: GoogleFonts.cairo().fontFamily,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.backgroundColor,
+                          onPressed: () {
+                            cubit.openTags(
+                                context,
+                                state.loggedInAdmin,
+                                state.adminData,
+                                state.tagsData,
+                                state.iconsData,
+                                state.articlesData);
+                          },
+                          child: Text(
+                            'Tags',
+                            style: TextStyle(
+                              fontFamily: GoogleFonts.cairo().fontFamily,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.backgroundColor,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: screenSize.width * 0.01,
-                    ),
-                    CustomAuthTextForm(
-                      width: screenSize.width * 0.2,
-                    ),
-                  ],
+                      SizedBox(
+                        width: screenSize.width * 0.01,
+                      ),
+                      // icons
+                      GlassmorphismContainer(
+                        width: screenSize.width * 0.08,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onPressed: () {
+                            cubit.openIcons(
+                                context,
+                                state.loggedInAdmin,
+                                state.adminData,
+                                state.tagsData,
+                                state.iconsData,
+                                state.articlesData);
+                          },
+                          child: Text(
+                            'Icons',
+                            style: TextStyle(
+                              fontFamily: GoogleFonts.cairo().fontFamily,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.backgroundColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: screenSize.width * 0.01,
+                      ),
+                      CustomAuthTextForm(
+                        width: screenSize.width * 0.2,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: 2,
-              width: screenSize.width,
-              color: AppColors.backgroundColor,
             ),
             Stack(
               children: [
@@ -297,7 +299,7 @@ class HomeScreen extends StatelessWidget {
                     //0.13
                     height: screenSize.height,
 
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.darkColor,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20),
@@ -325,7 +327,7 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.backgroundColor,
                                     child: Icon(
@@ -367,7 +369,7 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.backgroundColor,
                                     child: Icon(
@@ -409,7 +411,7 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.backgroundColor,
                                     child: Icon(
@@ -451,7 +453,7 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.backgroundColor,
                                     child: Icon(
@@ -493,7 +495,7 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.backgroundColor,
                                     child: Icon(
@@ -528,7 +530,7 @@ class HomeScreen extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.backgroundColor,
                                     child: Icon(
@@ -556,110 +558,6 @@ class HomeScreen extends StatelessWidget {
                             SizedBox(
                               height: screenSize.height * 0.04,
                             ),
-
-                            ///dashboard
-                            // SizedBox(
-                            //   height: screenSize.height * 0.1,
-                            // ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            //   children: [
-                            //     GlassmorphismContainer(
-                            //       width: screenSize.width * 0.2,
-                            //       height: screenSize.height * 0.2,
-                            //       child: Column(
-                            //         mainAxisAlignment: MainAxisAlignment.center,
-                            //         children: [
-                            //           Text(
-                            //             'Total Articles',
-                            //             style: TextStyle(
-                            //               fontFamily:
-                            //                   GoogleFonts.cairo().fontFamily,
-                            //               fontSize: 20,
-                            //               fontWeight: FontWeight.w900,
-                            //               color: AppColors.backgroundColor,
-                            //             ),
-                            //           ),
-                            //           SizedBox(
-                            //             height: screenSize.height * 0.01,
-                            //           ),
-                            //           Text(
-                            //             '100',
-                            //             style: TextStyle(
-                            //               fontFamily:
-                            //                   GoogleFonts.cairo().fontFamily,
-                            //               fontSize: 20,
-                            //               fontWeight: FontWeight.w900,
-                            //               color: AppColors.backgroundColor,
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //     GlassmorphismContainer(
-                            //       width: screenSize.width * 0.2,
-                            //       height: screenSize.height * 0.2,
-                            //       child: Column(
-                            //         mainAxisAlignment: MainAxisAlignment.center,
-                            //         children: [
-                            //           Text(
-                            //             'Total Tags',
-                            //             style: TextStyle(
-                            //               fontFamily:
-                            //                   GoogleFonts.cairo().fontFamily,
-                            //               fontSize: 20,
-                            //               fontWeight: FontWeight.w900,
-                            //               color: AppColors.backgroundColor,
-                            //             ),
-                            //           ),
-                            //           SizedBox(
-                            //             height: screenSize.height * 0.01,
-                            //           ),
-                            //           Text(
-                            //             '100',
-                            //             style: TextStyle(
-                            //               fontFamily:
-                            //                   GoogleFonts.cairo().fontFamily,
-                            //               fontSize: 20,
-                            //               fontWeight: FontWeight.w900,
-                            //               color: AppColors.backgroundColor,
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //     GlassmorphismContainer(
-                            //       width: screenSize.width * 0.2,
-                            //       height: screenSize.height * 0.2,
-                            //       child: Column(
-                            //         mainAxisAlignment: MainAxisAlignment.center,
-                            //         children: [
-                            //           Text(
-                            //             'Total Icons',
-                            //             style: TextStyle(
-                            //               fontFamily:
-                            //                   GoogleFonts.cairo().fontFamily,
-                            //               fontSize: 20,
-                            //               fontWeight: FontWeight.w900,
-                            //               color: AppColors.backgroundColor,
-                            //             ),
-                            //           ),
-                            //           SizedBox(
-                            //             height: screenSize.height * 0.01,
-                            //           ),
-                            //           Text(
-                            //             '100',
-                            //             style: TextStyle(
-                            //               fontFamily:
-                            //                   GoogleFonts.cairo().fontFamily,
-                            //               fontSize: 20,
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         ),
                       ),
@@ -690,7 +588,7 @@ class HomeScreen extends StatelessWidget {
                                 /// Dashboard Page
                                 AnimatedOpacity(
                                   opacity: cubit.dashboardOpacity!,
-                                  duration: Duration(milliseconds: 500),
+                                  duration: const Duration(milliseconds: 500),
                                   child: Column(
                                     children: [
                                       state.iconsData.length == 0
@@ -1433,285 +1331,772 @@ class HomeScreen extends StatelessWidget {
 
                                 /// Admin Page
                                 AnimatedOpacity(
-                                  opacity: cubit.adminOpacity!,
-                                  duration: Duration(milliseconds: 500),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          GlassmorphismContainer(
-                                            width: screenSize.width / 3,
-                                            height: screenSize.height,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(
-                                                25,
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  state.loggedInAdmin.image ==
-                                                          null
-                                                      ? CircleAvatar(
-                                                          radius:
-                                                              screenSize.width *
-                                                                  0.2,
-                                                          backgroundColor:
-                                                              AppColors
-                                                                  .primaryColor,
-                                                          child: Icon(Icons
-                                                              .person_rounded))
-                                                      : FutureBuilder<String>(
-                                                          future: cubit
-                                                              .loadImage(state
-                                                                  .loggedInAdmin
-                                                                  .image),
-                                                          builder: (BuildContext
-                                                                  context,
-                                                              AsyncSnapshot<
-                                                                      String>
-                                                                  snapshot) {
-                                                            return CircleAvatar(
-                                                                radius: screenSize
-                                                                        .width *
-                                                                    0.05,
-                                                                backgroundImage:
-                                                                    NetworkImage(
-                                                                  AppImages
-                                                                      .backGround,
-                                                                ),
-                                                                child: Center(
-                                                                    child:
-                                                                        ClipOval(
-                                                                  child: SizedBox
-                                                                      .fromSize(
-                                                                    size: Size
-                                                                        .fromRadius(
-                                                                      screenSize
-                                                                              .width *
-                                                                          0.04,
-                                                                    ),
-                                                                    child: snapshot.connectionState ==
-                                                                            ConnectionState.waiting
-                                                                        ? CircularProgressIndicator()
-                                                                        : snapshot.hasError
-                                                                            ? Text(snapshot.error.toString())
-                                                                            : Image.network(
-                                                                                state.loggedInAdmin.image,
-                                                                              ),
-                                                                  ),
-                                                                )));
-                                                          }),
-                                                  SizedBox(
-                                                    height:
-                                                        screenSize.height * 0.1,
-                                                  ),
-                                                  Text(
-                                                    state.loggedInAdmin.name,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      GlassmorphismContainer(
-                                                        width:
-                                                            screenSize.width *
-                                                                0.08,
-                                                        height:
-                                                            screenSize.height *
-                                                                0.22,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              state
-                                                                  .loggedInAdmin
-                                                                  .postsCount
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 22,
-                                                                fontFamily: GoogleFonts
-                                                                        .cairo()
-                                                                    .fontFamily,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w900,
-                                                                color: AppColors
-                                                                    .backgroundColor,
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: screenSize
-                                                                      .height *
-                                                                  0.03,
-                                                            ),
-                                                            Text(
-                                                              'Articles',
-                                                              style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontFamily: GoogleFonts
-                                                                        .cairo()
-                                                                    .fontFamily,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: AppColors
-                                                                    .backgroundColor
-                                                                    .withOpacity(
-                                                                  0.7,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width:
-                                                            screenSize.width *
-                                                                0.02,
-                                                      ),
-                                                      GlassmorphismContainer(
-                                                        width:
-                                                            screenSize.width *
-                                                                0.08,
-                                                        height:
-                                                            screenSize.height *
-                                                                0.22,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              state
-                                                                  .loggedInAdmin
-                                                                  .iconssCount
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 22,
-                                                                fontFamily: GoogleFonts
-                                                                        .cairo()
-                                                                    .fontFamily,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w900,
-                                                                color: AppColors
-                                                                    .backgroundColor,
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: screenSize
-                                                                      .height *
-                                                                  0.03,
-                                                            ),
-                                                            Text(
-                                                              'Icons',
-                                                              style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontFamily: GoogleFonts
-                                                                        .cairo()
-                                                                    .fontFamily,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: AppColors
-                                                                    .backgroundColor
-                                                                    .withOpacity(
-                                                                  0.7,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width:
-                                                            screenSize.width *
-                                                                0.02,
-                                                      ),
-                                                      GlassmorphismContainer(
-                                                        width:
-                                                            screenSize.width *
-                                                                0.08,
-                                                        height:
-                                                            screenSize.height *
-                                                                0.22,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              state
-                                                                  .loggedInAdmin
-                                                                  .tagsCount
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 22,
-                                                                fontFamily: GoogleFonts
-                                                                        .cairo()
-                                                                    .fontFamily,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w900,
-                                                                color: AppColors
-                                                                    .backgroundColor,
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: screenSize
-                                                                      .height *
-                                                                  0.03,
-                                                            ),
-                                                            Text(
-                                                              'Tags',
-                                                              style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontFamily: GoogleFonts
-                                                                        .cairo()
-                                                                    .fontFamily,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: AppColors
-                                                                    .backgroundColor
-                                                                    .withOpacity(
-                                                                  0.7,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                    opacity: cubit.adminOpacity!,
+                                    duration: const Duration(milliseconds: 500),
+                                    child: AdminScreen(
+                                      cubit: cubit,
+                                      state: state,
+                                    )
+                                    // Column(
+                                    //   children: [
+                                    //     AnimatedOpacity(
+                                    //       opacity: cubit.adminButtonOpacity!,
+                                    //       duration:
+                                    //           const Duration(milliseconds: 500),
+                                    //       child: Padding(
+                                    //         padding: const EdgeInsets.all(20.0),
+                                    //         child: Row(
+                                    //           mainAxisAlignment:
+                                    //               MainAxisAlignment.center,
+                                    //           crossAxisAlignment:
+                                    //               CrossAxisAlignment.center,
+                                    //           children: [
+                                    //             GestureDetector(
+                                    //               onTap: () {
+                                    //                 cubit.allAdminShow(
+                                    //                   state.loggedInAdmin,
+                                    //                   state.adminData,
+                                    //                   state.tagsData,
+                                    //                   state.iconsData,
+                                    //                   state.articlesData,
+                                    //                 );
+                                    //               },
+                                    //               child: GlassmorphismContainer(
+                                    //                 width: screenSize.width * 0.2,
+                                    //                 height:
+                                    //                     screenSize.height * 0.25,
+                                    //                 child: Icon(
+                                    //                   Icons.person_rounded,
+                                    //                 ),
+                                    //               ),
+                                    //             ),
+                                    //             SizedBox(
+                                    //               width: screenSize.width * 0.1,
+                                    //             ),
+                                    //             GestureDetector(
+                                    //               onTap: () {
+                                    //                 cubit.addAdmins(
+                                    //                   state.loggedInAdmin,
+                                    //                   state.adminData,
+                                    //                   state.tagsData,
+                                    //                   state.iconsData,
+                                    //                   state.articlesData,
+                                    //                 );
+                                    //               },
+                                    //               child: GlassmorphismContainer(
+                                    //                 width: screenSize.width * 0.2,
+                                    //                 height:
+                                    //                     screenSize.height * 0.25,
+                                    //                 child: Icon(
+                                    //                   Icons.add,
+                                    //                 ),
+                                    //               ),
+                                    //             ),
+                                    //           ],
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //     Stack(
+                                    //       children: [
+                                    //         /// Add Admin
+                                    //         AnimatedOpacity(
+                                    //           opacity: cubit.addAdminOpacity!,
+                                    //           duration: const Duration(
+                                    //               milliseconds: 500),
+                                    //           child: GlassmorphismContainer(
+                                    //             height: screenSize.height,
+                                    //             width: screenSize.width * 0.9,
+                                    //             child: Stack(
+                                    //               children: [
+                                    //                 GlassmorphismContainer(
+                                    //                   width:
+                                    //                       screenSize.width * 0.01,
+                                    //                   height: screenSize.height *
+                                    //                       0.03,
+                                    //                   child: GestureDetector(
+                                    //                     child: Icon(
+                                    //                       Icons.close,
+                                    //                       color: AppColors
+                                    //                           .backgroundColor,
+                                    //                     ),
+                                    //                     onTap: cubit.addAdmins(
+                                    //                       state.loggedInAdmin,
+                                    //                       state.adminData,
+                                    //                       state.tagsData,
+                                    //                       state.iconsData,
+                                    //                       state.articlesData,
+                                    //                     ),
+                                    //                   ),
+                                    //                 ),
+                                    //                 Column(
+                                    //                   children: [
+                                    //                     Text(
+                                    //                       'User Name',
+                                    //                       textAlign:
+                                    //                           TextAlign.right,
+                                    //                       style: TextStyle(
+                                    //                         fontFamily:
+                                    //                             GoogleFonts
+                                    //                                     .cairo()
+                                    //                                 .fontFamily,
+                                    //                         fontSize: 30,
+                                    //                         fontWeight:
+                                    //                             FontWeight.w900,
+                                    //                         color: AppColors
+                                    //                             .backgroundColor,
+                                    //                       ),
+                                    //                     ),
+                                    //                     SizedBox(
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.008,
+                                    //                     ),
+                                    //                     CustomAuthTextForm(
+                                    //                       keyboardType:
+                                    //                           TextInputType.name,
+                                    //                       preIcon: Icon(Icons
+                                    //                           .person_rounded),
+                                    //                       width:
+                                    //                           screenSize.width *
+                                    //                               0.35,
+                                    //                     ),
+                                    //                     SizedBox(
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.008,
+                                    //                     ),
+                                    //                     Text(
+                                    //                       'Email Address',
+                                    //                       textAlign:
+                                    //                           TextAlign.right,
+                                    //                       style: TextStyle(
+                                    //                         fontFamily:
+                                    //                             GoogleFonts
+                                    //                                     .cairo()
+                                    //                                 .fontFamily,
+                                    //                         fontSize: 30,
+                                    //                         fontWeight:
+                                    //                             FontWeight.w900,
+                                    //                         color: AppColors
+                                    //                             .backgroundColor,
+                                    //                       ),
+                                    //                     ),
+                                    //                     SizedBox(
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.008,
+                                    //                     ),
+                                    //                     CustomAuthTextForm(
+                                    //                       keyboardType:
+                                    //                           TextInputType
+                                    //                               .emailAddress,
+                                    //                       preIcon: Icon(Icons
+                                    //                           .email_rounded),
+                                    //                       width:
+                                    //                           screenSize.width *
+                                    //                               0.35,
+                                    //                     ),
+                                    //                     SizedBox(
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.008,
+                                    //                     ),
+                                    //                     Text(
+                                    //                       'Password',
+                                    //                       textAlign:
+                                    //                           TextAlign.right,
+                                    //                       style: TextStyle(
+                                    //                         fontFamily:
+                                    //                             GoogleFonts
+                                    //                                     .cairo()
+                                    //                                 .fontFamily,
+                                    //                         fontSize: 30,
+                                    //                         fontWeight:
+                                    //                             FontWeight.w900,
+                                    //                         color: AppColors
+                                    //                             .backgroundColor,
+                                    //                       ),
+                                    //                     ),
+                                    //                     SizedBox(
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.008,
+                                    //                     ),
+                                    //                     CustomAuthTextForm(
+                                    //                       keyboardType:
+                                    //                           TextInputType
+                                    //                               .visiblePassword,
+                                    //                       preIcon: Icon(
+                                    //                           Icons.lock_rounded),
+                                    //                       width:
+                                    //                           screenSize.width *
+                                    //                               0.35,
+                                    //                     ),
+                                    //                     SizedBox(
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.008,
+                                    //                     ),
+                                    //                     GlassmorphismContainer(
+                                    //                       width:
+                                    //                           screenSize.width *
+                                    //                               0.08,
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.06,
+                                    //                       child: ElevatedButton(
+                                    //                         style: ElevatedButton
+                                    //                             .styleFrom(
+                                    //                           shadowColor: Colors
+                                    //                               .transparent,
+                                    //                           backgroundColor:
+                                    //                               Colors
+                                    //                                   .transparent,
+                                    //                           elevation: 0,
+                                    //                           shape:
+                                    //                               RoundedRectangleBorder(
+                                    //                             borderRadius:
+                                    //                                 BorderRadius
+                                    //                                     .circular(
+                                    //                                         20),
+                                    //                           ),
+                                    //                         ),
+                                    //                         onPressed: () {},
+                                    //                         child: Text(
+                                    //                           'Upload Image',
+                                    //                           textAlign: TextAlign
+                                    //                               .center,
+                                    //                           style: TextStyle(
+                                    //                             fontFamily:
+                                    //                                 GoogleFonts
+                                    //                                         .cairo()
+                                    //                                     .fontFamily,
+                                    //                             fontSize: 30,
+                                    //                             fontWeight:
+                                    //                                 FontWeight
+                                    //                                     .w900,
+                                    //                             color: AppColors
+                                    //                                 .backgroundColor,
+                                    //                           ),
+                                    //                         ),
+                                    //                       ),
+                                    //                     ),
+                                    //                     SizedBox(
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.008,
+                                    //                     ),
+                                    //                     GlassmorphismContainer(
+                                    //                       width:
+                                    //                           screenSize.width *
+                                    //                               0.35,
+                                    //                       height:
+                                    //                           screenSize.height *
+                                    //                               0.08,
+                                    //                       child: ElevatedButton(
+                                    //                         style: ElevatedButton
+                                    //                             .styleFrom(
+                                    //                           shadowColor: Colors
+                                    //                               .transparent,
+                                    //                           backgroundColor:
+                                    //                               Colors
+                                    //                                   .transparent,
+                                    //                           elevation: 0,
+                                    //                           shape:
+                                    //                               RoundedRectangleBorder(
+                                    //                             borderRadius:
+                                    //                                 BorderRadius
+                                    //                                     .circular(
+                                    //                                         20),
+                                    //                           ),
+                                    //                         ),
+                                    //                         onPressed: () {},
+                                    //                         child: Text(
+                                    //                           'Add Admin',
+                                    //                           textAlign: TextAlign
+                                    //                               .center,
+                                    //                           style: TextStyle(
+                                    //                             fontFamily:
+                                    //                                 GoogleFonts
+                                    //                                         .cairo()
+                                    //                                     .fontFamily,
+                                    //                             fontSize: 30,
+                                    //                             fontWeight:
+                                    //                                 FontWeight
+                                    //                                     .w900,
+                                    //                             color: AppColors
+                                    //                                 .backgroundColor,
+                                    //                           ),
+                                    //                         ),
+                                    //                       ),
+                                    //                     ),
+                                    //                   ],
+                                    //                 ),
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+
+                                    //         /// Explore Admins
+                                    //         AnimatedOpacity(
+                                    //           opacity: cubit.allAdminsOpacity!,
+                                    //           duration: const Duration(
+                                    //               milliseconds: 500),
+                                    //           child: Row(
+                                    //             children: [
+                                    //               GlassmorphismContainer(
+                                    //                 width: screenSize.width / 3,
+                                    //                 height: screenSize.height,
+                                    //                 child: Padding(
+                                    //                   padding:
+                                    //                       const EdgeInsets.all(
+                                    //                     25,
+                                    //                   ),
+                                    //                   child: Column(
+                                    //                     crossAxisAlignment:
+                                    //                         CrossAxisAlignment
+                                    //                             .center,
+                                    //                     children: [
+                                    //                       state.loggedInAdmin
+                                    //                                   .image ==
+                                    //                               null
+                                    //                           ? CircleAvatar(
+                                    //                               radius: screenSize
+                                    //                                       .width *
+                                    //                                   0.2,
+                                    //                               backgroundColor:
+                                    //                                   AppColors
+                                    //                                       .primaryColor,
+                                    //                               child: const Icon(
+                                    //                                   Icons
+                                    //                                       .person_rounded))
+                                    //                           : FutureBuilder<
+                                    //                               String>(
+                                    //                               future: cubit
+                                    //                                   .loadImage(state
+                                    //                                       .loggedInAdmin
+                                    //                                       .image),
+                                    //                               builder: (BuildContext
+                                    //                                       context,
+                                    //                                   AsyncSnapshot<
+                                    //                                           String>
+                                    //                                       snapshot) {
+                                    //                                 return CircleAvatar(
+                                    //                                   radius: screenSize
+                                    //                                           .width *
+                                    //                                       0.05,
+                                    //                                   backgroundImage:
+                                    //                                       const NetworkImage(
+                                    //                                     AppImages
+                                    //                                         .backGround,
+                                    //                                   ),
+                                    //                                   child:
+                                    //                                       Center(
+                                    //                                     child:
+                                    //                                         ClipOval(
+                                    //                                       child: SizedBox
+                                    //                                           .fromSize(
+                                    //                                         size:
+                                    //                                             Size.fromRadius(
+                                    //                                           screenSize.width *
+                                    //                                               0.04,
+                                    //                                         ),
+                                    //                                         child: snapshot.connectionState == ConnectionState.waiting
+                                    //                                             ? const CircularProgressIndicator()
+                                    //                                             : snapshot.hasError
+                                    //                                                 ? Text(
+                                    //                                                     snapshot.error.toString(),
+                                    //                                                   )
+                                    //                                                 : Image.network(
+                                    //                                                     state.loggedInAdmin.image,
+                                    //                                                     scale: 1,
+                                    //                                                   ),
+                                    //                                       ),
+                                    //                                     ),
+                                    //                                   ),
+                                    //                                 );
+                                    //                               },
+                                    //                             ),
+                                    //                       SizedBox(
+                                    //                         height: screenSize
+                                    //                                 .height *
+                                    //                             0.03,
+                                    //                       ),
+                                    //                       Text(
+                                    //                         state.loggedInAdmin
+                                    //                             .name,
+                                    //                         style: TextStyle(
+                                    //                           fontSize: 22,
+                                    //                           fontFamily:
+                                    //                               GoogleFonts
+                                    //                                       .cairo()
+                                    //                                   .fontFamily,
+                                    //                           fontWeight:
+                                    //                               FontWeight.w900,
+                                    //                           color: AppColors
+                                    //                               .backgroundColor,
+                                    //                         ),
+                                    //                       ),
+                                    //                       SizedBox(
+                                    //                         height: screenSize
+                                    //                                 .height *
+                                    //                             0.03,
+                                    //                       ),
+                                    //                       Text(
+                                    //                         state.loggedInAdmin
+                                    //                             .email,
+                                    //                         style: TextStyle(
+                                    //                           fontSize: 22,
+                                    //                           fontFamily:
+                                    //                               GoogleFonts
+                                    //                                       .cairo()
+                                    //                                   .fontFamily,
+                                    //                           fontWeight:
+                                    //                               FontWeight.w900,
+                                    //                           color: AppColors
+                                    //                               .backgroundColor,
+                                    //                         ),
+                                    //                       ),
+                                    //                       SizedBox(
+                                    //                         height: screenSize
+                                    //                                 .height *
+                                    //                             0.1,
+                                    //                       ),
+                                    //                       Row(
+                                    //                         mainAxisAlignment:
+                                    //                             MainAxisAlignment
+                                    //                                 .center,
+                                    //                         children: [
+                                    //                           GlassmorphismContainer(
+                                    //                             width: screenSize
+                                    //                                     .width *
+                                    //                                 0.08,
+                                    //                             height: screenSize
+                                    //                                     .height *
+                                    //                                 0.22,
+                                    //                             child: Column(
+                                    //                               mainAxisAlignment:
+                                    //                                   MainAxisAlignment
+                                    //                                       .center,
+                                    //                               crossAxisAlignment:
+                                    //                                   CrossAxisAlignment
+                                    //                                       .center,
+                                    //                               children: [
+                                    //                                 Text(
+                                    //                                   state
+                                    //                                       .loggedInAdmin
+                                    //                                       .postsCount
+                                    //                                       .toString(),
+                                    //                                   style:
+                                    //                                       TextStyle(
+                                    //                                     fontSize:
+                                    //                                         22,
+                                    //                                     fontFamily:
+                                    //                                         GoogleFonts.cairo()
+                                    //                                             .fontFamily,
+                                    //                                     fontWeight:
+                                    //                                         FontWeight
+                                    //                                             .w900,
+                                    //                                     color: AppColors
+                                    //                                         .backgroundColor,
+                                    //                                   ),
+                                    //                                 ),
+                                    //                                 SizedBox(
+                                    //                                   height: screenSize
+                                    //                                           .height *
+                                    //                                       0.03,
+                                    //                                 ),
+                                    //                                 Text(
+                                    //                                   'Articles',
+                                    //                                   style:
+                                    //                                       TextStyle(
+                                    //                                     fontSize:
+                                    //                                         18,
+                                    //                                     fontFamily:
+                                    //                                         GoogleFonts.cairo()
+                                    //                                             .fontFamily,
+                                    //                                     fontWeight:
+                                    //                                         FontWeight
+                                    //                                             .w400,
+                                    //                                     color: AppColors
+                                    //                                         .backgroundColor
+                                    //                                         .withOpacity(
+                                    //                                       0.7,
+                                    //                                     ),
+                                    //                                   ),
+                                    //                                 ),
+                                    //                               ],
+                                    //                             ),
+                                    //                           ),
+                                    //                           SizedBox(
+                                    //                             width: screenSize
+                                    //                                     .width *
+                                    //                                 0.02,
+                                    //                           ),
+                                    //                           GlassmorphismContainer(
+                                    //                             width: screenSize
+                                    //                                     .width *
+                                    //                                 0.08,
+                                    //                             height: screenSize
+                                    //                                     .height *
+                                    //                                 0.22,
+                                    //                             child: Column(
+                                    //                               mainAxisAlignment:
+                                    //                                   MainAxisAlignment
+                                    //                                       .center,
+                                    //                               crossAxisAlignment:
+                                    //                                   CrossAxisAlignment
+                                    //                                       .center,
+                                    //                               children: [
+                                    //                                 Text(
+                                    //                                   state
+                                    //                                       .loggedInAdmin
+                                    //                                       .iconssCount
+                                    //                                       .toString(),
+                                    //                                   style:
+                                    //                                       TextStyle(
+                                    //                                     fontSize:
+                                    //                                         22,
+                                    //                                     fontFamily:
+                                    //                                         GoogleFonts.cairo()
+                                    //                                             .fontFamily,
+                                    //                                     fontWeight:
+                                    //                                         FontWeight
+                                    //                                             .w900,
+                                    //                                     color: AppColors
+                                    //                                         .backgroundColor,
+                                    //                                   ),
+                                    //                                 ),
+                                    //                                 SizedBox(
+                                    //                                   height: screenSize
+                                    //                                           .height *
+                                    //                                       0.03,
+                                    //                                 ),
+                                    //                                 Text(
+                                    //                                   'Icons',
+                                    //                                   style:
+                                    //                                       TextStyle(
+                                    //                                     fontSize:
+                                    //                                         18,
+                                    //                                     fontFamily:
+                                    //                                         GoogleFonts.cairo()
+                                    //                                             .fontFamily,
+                                    //                                     fontWeight:
+                                    //                                         FontWeight
+                                    //                                             .w400,
+                                    //                                     color: AppColors
+                                    //                                         .backgroundColor
+                                    //                                         .withOpacity(
+                                    //                                       0.7,
+                                    //                                     ),
+                                    //                                   ),
+                                    //                                 ),
+                                    //                               ],
+                                    //                             ),
+                                    //                           ),
+                                    //                           SizedBox(
+                                    //                             width: screenSize
+                                    //                                     .width *
+                                    //                                 0.02,
+                                    //                           ),
+                                    //                           GlassmorphismContainer(
+                                    //                             width: screenSize
+                                    //                                     .width *
+                                    //                                 0.08,
+                                    //                             height: screenSize
+                                    //                                     .height *
+                                    //                                 0.22,
+                                    //                             child: Column(
+                                    //                               mainAxisAlignment:
+                                    //                                   MainAxisAlignment
+                                    //                                       .center,
+                                    //                               crossAxisAlignment:
+                                    //                                   CrossAxisAlignment
+                                    //                                       .center,
+                                    //                               children: [
+                                    //                                 Text(
+                                    //                                   state
+                                    //                                       .loggedInAdmin
+                                    //                                       .tagsCount
+                                    //                                       .toString(),
+                                    //                                   style:
+                                    //                                       TextStyle(
+                                    //                                     fontSize:
+                                    //                                         22,
+                                    //                                     fontFamily:
+                                    //                                         GoogleFonts.cairo()
+                                    //                                             .fontFamily,
+                                    //                                     fontWeight:
+                                    //                                         FontWeight
+                                    //                                             .w900,
+                                    //                                     color: AppColors
+                                    //                                         .backgroundColor,
+                                    //                                   ),
+                                    //                                 ),
+                                    //                                 SizedBox(
+                                    //                                   height: screenSize
+                                    //                                           .height *
+                                    //                                       0.03,
+                                    //                                 ),
+                                    //                                 Text(
+                                    //                                   'Tags',
+                                    //                                   style:
+                                    //                                       TextStyle(
+                                    //                                     fontSize:
+                                    //                                         18,
+                                    //                                     fontFamily:
+                                    //                                         GoogleFonts.cairo()
+                                    //                                             .fontFamily,
+                                    //                                     fontWeight:
+                                    //                                         FontWeight
+                                    //                                             .w400,
+                                    //                                     color: AppColors
+                                    //                                         .backgroundColor
+                                    //                                         .withOpacity(
+                                    //                                       0.7,
+                                    //                                     ),
+                                    //                                   ),
+                                    //                                 ),
+                                    //                               ],
+                                    //                             ),
+                                    //                           ),
+                                    //                         ],
+                                    //                       ),
+                                    //                     ],
+                                    //                   ),
+                                    //                 ),
+                                    //               ),
+                                    //               SizedBox(
+                                    //                 width:
+                                    //                     screenSize.width * 0.008,
+                                    //               ),
+                                    //               Stack(
+                                    //                 children: [
+                                    //                   SizedBox(
+                                    //                     width: screenSize.width *
+                                    //                         1.8 /
+                                    //                         3,
+                                    //                     height: screenSize.height,
+                                    //                     child: GridView.builder(
+                                    //                       itemCount: state
+                                    //                           .adminData.length,
+                                    //                       padding:
+                                    //                           const EdgeInsets
+                                    //                               .all(10),
+                                    //                       gridDelegate:
+                                    //                           // ignore: prefer_const_constructors
+                                    //                           SliverGridDelegateWithFixedCrossAxisCount(
+                                    //                               crossAxisCount:
+                                    //                                   3,
+                                    //                               childAspectRatio:
+                                    //                                   3 / 2,
+                                    //                               crossAxisSpacing:
+                                    //                                   10,
+                                    //                               mainAxisSpacing:
+                                    //                                   10),
+                                    //                       itemBuilder: (ctx,
+                                    //                               index) =>
+                                    //                           GlassmorphismContainer(
+                                    //                         width:
+                                    //                             screenSize.width *
+                                    //                                 0.006,
+                                    //                         height: screenSize
+                                    //                                 .height *
+                                    //                             0.22,
+                                    //                         child: Padding(
+                                    //                           padding:
+                                    //                               const EdgeInsets
+                                    //                                   .all(20.0),
+                                    //                           child: Column(
+                                    //                             children: [
+                                    //                               FutureBuilder<
+                                    //                                   String>(
+                                    //                                 future: cubit
+                                    //                                     .loadImage(state
+                                    //                                         .loggedInAdmin
+                                    //                                         .image),
+                                    //                                 builder: (BuildContext
+                                    //                                         context,
+                                    //                                     AsyncSnapshot<
+                                    //                                             String>
+                                    //                                         snapshot) {
+                                    //                                   return CircleAvatar(
+                                    //                                     radius: screenSize
+                                    //                                             .width *
+                                    //                                         0.03,
+                                    //                                     backgroundImage:
+                                    //                                         const NetworkImage(
+                                    //                                       AppImages
+                                    //                                           .backGround,
+                                    //                                     ),
+                                    //                                     child:
+                                    //                                         Center(
+                                    //                                       child:
+                                    //                                           ClipOval(
+                                    //                                         child:
+                                    //                                             SizedBox.fromSize(
+                                    //                                           size:
+                                    //                                               Size.fromRadius(
+                                    //                                             screenSize.width * 0.024,
+                                    //                                           ),
+                                    //                                           child: snapshot.connectionState == ConnectionState.waiting
+                                    //                                               ? const CircularProgressIndicator()
+                                    //                                               : snapshot.hasError
+                                    //                                                   ? Text(
+                                    //                                                       snapshot.error.toString(),
+                                    //                                                     )
+                                    //                                                   : Image.network(
+                                    //                                                       state.adminData[index].image,
+                                    //                                                       scale: 1,
+                                    //                                                     ),
+                                    //                                         ),
+                                    //                                       ),
+                                    //                                     ),
+                                    //                                   );
+                                    //                                 },
+                                    //                               ),
+                                    //                               Text(
+                                    //                                 state
+                                    //                                     .adminData[
+                                    //                                         index]
+                                    //                                     .name,
+                                    //                                 style:
+                                    //                                     TextStyle(
+                                    //                                   fontSize:
+                                    //                                       30,
+                                    //                                   fontFamily:
+                                    //                                       GoogleFonts.cairo()
+                                    //                                           .fontFamily,
+                                    //                                   fontWeight:
+                                    //                                       FontWeight
+                                    //                                           .w800,
+                                    //                                   color: AppColors
+                                    //                                       .backgroundColor,
+                                    //                                 ),
+                                    //                               ),
+                                    //                             ],
+                                    //                           ),
+                                    //                         ),
+                                    //                       ),
+                                    //                     ),
+                                    //                   ),
+                                    //                 ],
+                                    //               ),
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     )
+                                    //   ],
+                                    // ),
+
+                                    ),
 
                                 /// Icons Page
                                 AnimatedOpacity(
                                   opacity: cubit.iconsOpacity!,
-                                  duration: Duration(milliseconds: 500),
-                                  child: Column(
+                                  duration: const Duration(milliseconds: 500),
+                                  child: const Column(
                                     children: [
                                       Center(
                                         child: Text('Icons'),
@@ -1723,8 +2108,8 @@ class HomeScreen extends StatelessWidget {
                                 /// Tags Page
                                 AnimatedOpacity(
                                   opacity: cubit.tagsOpacity!,
-                                  duration: Duration(milliseconds: 500),
-                                  child: Column(
+                                  duration: const Duration(milliseconds: 500),
+                                  child: const Column(
                                     children: [
                                       Center(
                                         child: Text('Tags'),
@@ -1736,8 +2121,8 @@ class HomeScreen extends StatelessWidget {
                                 /// Articles Page
                                 AnimatedOpacity(
                                   opacity: cubit.articlesOpacity!,
-                                  duration: Duration(milliseconds: 500),
-                                  child: Column(
+                                  duration: const Duration(milliseconds: 500),
+                                  child: const Column(
                                     children: [
                                       Center(
                                         child: Text('Articles'),

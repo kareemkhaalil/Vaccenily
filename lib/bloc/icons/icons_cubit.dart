@@ -5,6 +5,7 @@ import 'package:file/file.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:meta/meta.dart';
+import 'package:universal_html/html.dart' as html;
 
 part 'icons_state.dart';
 
@@ -90,19 +91,20 @@ class IconsCubit extends Cubit<IconsState> {
     // }
   }
 
-  File? articlesImageFile;
   var picker = ImagePickerPlugin();
-  Future pickImage() async {
-    emit(IconsPickImageLoadingState());
-    final pickedFile = await picker.pickFile();
-    if (pickedFile != null) {
-      emit(IconsPickImageSuccessState());
-      articlesImageFile!.path == pickedFile.path.toString();
-      print(pickedFile.path.toString());
-    } else {
-      print('No Image Selected');
-      emit(IconsPickImageErrorState('No Image Selected'));
-    }
+  html.File? image;
+  Future<void> pickImage() async {
+    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+    uploadInput.click();
+
+    uploadInput.onChange.listen((event) {
+      final file = uploadInput.files!.first;
+      final reader = html.FileReader();
+      reader.readAsDataUrl(file);
+      reader.onLoadEnd.listen((event) {
+        image = file;
+      });
+    });
   }
 
   void iconsUploadImages() {
