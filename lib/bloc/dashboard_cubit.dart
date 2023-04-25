@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:dashborad/bloc/articles/articlest_cubit.dart';
+import 'package:dashborad/bloc/auth/auth_cubit.dart';
 import 'package:dashborad/bloc/icons/icons_cubit.dart';
 import 'package:dashborad/bloc/tags/tags_cubit.dart';
+import 'package:dashborad/data/remote/fireAuth.dart';
+import 'package:dashborad/presentation/screens/login_screen.dart';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
 import 'package:carousel_slider/carousel_controller.dart';
@@ -25,6 +28,7 @@ part 'dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
   DashboardCubit({
+    required this.authCubit,
     required this.adminCubit,
     required this.iconsCubit,
     required this.tagsCubit,
@@ -38,62 +42,35 @@ class DashboardCubit extends Cubit<DashboardState> {
   final IconsCubit iconsCubit;
   final TagsCubit tagsCubit;
   final ArticlesCubit articlesCubit;
+  final AuthCubit authCubit;
   String uid;
   StreamController<AdminModel> adminModelController =
       StreamController<AdminModel>.broadcast();
-  // Future<void> fetchData() async {
-  //   try {
-  //     await adminCubit.getUserData(uid);
-  //     // await adminCubit.getAllUsers();
-  //     // await iconsCubit.getIconsData();
-  //     // await tagsCubit.getAllTagsData();
-  //     // await articlesCubit.getAllArticles();
-  //   } catch (e) {
-  //     print('Error in fetchData: $e');
-  //     emit(DashboardErrorState(
-  //       error: e.toString(),
-  //     ));
-  //   }
-  // }
+  var sliderSmall = 0.05;
+  double xOffset = 60;
+  double yOffset = 0;
+  double scalX = 0.00052;
+  bool sidebarOpen = false;
+  double? adminOpacity = 0;
+  double? tagsOpacity = 0;
+  double? articlesOpacity = 0;
+  double? iconsOpacity = 0;
+  double? dashboardOpacity = 1;
+  double? addAdminOpacity = 0;
+  double? allAdminsOpacity = 0;
+  double? adminButtonOpacity = 0;
+  AdminModel? adminModel;
+  TagsModel? tagsModel;
+  IconsModel? iconsModel;
+  ArticlesModel? articleModel;
+  TextFormField? addAdminEmail;
+  TextFormField? addAdminUserNamel;
+  TextFormField? addAdminPass;
+  bool isDark = false;
 
-  // Future<void> fetchData() async {
-  //   // استدعاء دوال الحصول على البيانات من الـcubits الأخرى
-  //   final adminData = await adminCubit.getUser();
-  //   final allAdminsData = await adminCubit.getAllUsers();
-  //
-  //   // استخدم Future.wait للتأكد من أن جميع الطلبات قد انتهت قبل الانتقال إلى الخطوة التالية
-  //   await Future.wait([
-  //     iconsCubit.getIconsData(),
-  //     tagsCubit.getAllTagsData(),
-  //     articlesCubit.getAllArticles(),
-  //   ]);
-  //
-  //   // تحقق من حالات الـcubits الأخرى بعد الانتهاء من تحميل البيانات
-  //   final iconsState = iconsCubit.state;
-  //   final tagsState = tagsCubit.state;
-  //   final articlesState = articlesCubit.state;
-  //   print('iconsState: $iconsState');
-  //   print('tagsState: $tagsState');
-  //   print('articlesState: $articlesState');
-  //
-  //   if (adminCubit.state is AdminUserUpdated) {
-  //     emit(DashboardDataLoaded(
-  //       loggedInAdmin: adminData,
-  //       adminData: allAdminsData,
-  //       // iconsData: iconsState.iconsData,
-  //       // tagsData: tagsState.tagsData,
-  //       // articlesData: articlesState.articles,
-  //     ));
-  //     print('data is loaded');
-  //     print('admin data is ${adminData}');
-  //   } else if (adminCubit.state is AdminInitial) {
-  //     print('data is initial');
-  //   } else if (adminCubit.state is AdminUserUpdating) {
-  //     print('data is loading');
-  //   } else {
-  //     print('data is error');
-  //   }
-  // }
+  final CarouselController buttonCarouselController = CarouselController();
+
+  PageController? pageController;
   Future<void> fetchData() async {
     try {
       final adminData = await adminCubit.getUser();
@@ -145,32 +122,6 @@ class DashboardCubit extends Cubit<DashboardState> {
     return imageUrl;
   }
 
-  var sliderSmall = 0.05;
-  double xOffset = 60;
-  double yOffset = 0;
-  double scalX = 0.00052;
-  bool sidebarOpen = false;
-  double? adminOpacity = 0;
-  double? tagsOpacity = 0;
-  double? articlesOpacity = 0;
-  double? iconsOpacity = 0;
-  double? dashboardOpacity = 1;
-  double? addAdminOpacity = 0;
-  double? allAdminsOpacity = 0;
-  double? adminButtonOpacity = 0;
-  AdminModel? adminModel;
-  TagsModel? tagsModel;
-  IconsModel? iconsModel;
-  ArticlesModel? articleModel;
-  TextFormField? addAdminEmail;
-  TextFormField? addAdminUserNamel;
-  TextFormField? addAdminPass;
-
-  bool isDark = false;
-  final CarouselController buttonCarouselController = CarouselController();
-
-  PageController? pageController;
-
   final List<String> images = [
     'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
     'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
@@ -180,6 +131,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     'https://images.unsplash.com/photo-1586951144438-26d4e072b891?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
     'https://images.unsplash.com/photo-1586953983027-d7508a64f4bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
   ];
+
   int activePageIndex = 0;
 
   void slideBar(
