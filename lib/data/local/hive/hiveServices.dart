@@ -17,7 +17,8 @@ class HiveService {
   }
 
   Future<void> deleteUser() async {
-    final userBox = await openUserBox();
-    userBox.delete('user');
+    Box<UserHive> userBox = await Hive.openBox<UserHive>('user');
+    await userBox.clear();
+    await userBox.close();
   }
 }

@@ -22,7 +22,40 @@ class Repository {
   /// Admin Functions ///
   // إضافة مشرف جديد
   Future<void> addAdmin(AdminModel admin) async {
-    await _firestore.collection('admins').add(admin.toJson());
+    try {
+      print("calling addAdmin()");
+      // إنشاء مستخدم جديد باستخدام البريد الإلكتروني وكلمة المرور الموجودة في الكائن admin
+      User? newUser = await _authRepository.createUserWithEmailAndPassword(
+          admin.email!, admin.password!);
+
+      if (admin.email == null) {
+        print("email is null");
+      } else {
+        print(admin.email);
+      }
+
+      if (admin.password == null) {
+        print("password is null");
+      } else {
+        print(admin.password);
+      }
+
+      // التحقق من أن newUser ليس null
+      if (newUser != null) {
+        // الحصول على معرف المستخدم الجديد
+        String userId = newUser.uid;
+
+        // إضافة معرف المستخدم إلى كائن AdminModel
+        admin.id = userId;
+
+        // إضافة بيانات الكائن admin إلى مجموعة 'admins' في Firestore واستخدام معرف المستخدم كمعرف الوثيقة
+        await _firestore.collection('admins').doc(userId).set(admin.toJson());
+      } else {
+        throw Exception("Model is null");
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+    }
   }
 
   // تحديث بيانات مشرف
@@ -72,29 +105,34 @@ class Repository {
     }
   }
 
-  Future<AdminModel> getCurrentAdmin(String adminId) async {
+  Future<AdminModel?> getCurrentAdmin(String adminId) async {
     // تأكيد وجود معرّف المشرف
-    if (adminId == null) {
-      throw Exception('معرّف المشرف غير موجود');
+    try {
+      if (adminId == null) {
+        throw Exception('معرّف المشرف غير موجود');
+      }
+      // الحصول على مرجع المستند المطلوب استرجاعه
+      DocumentReference adminDocRef =
+          _firestore.collection('admins').doc(adminId);
+
+      // استرجاع المستند من Firestore
+      DocumentSnapshot adminDoc = await adminDocRef.get();
+
+      // التحقق من وجود المستند
+      if (!adminDoc.exists) {
+        throw Exception('المشرف غير موجود');
+      }
+
+      // تحويل البيانات إلى كائن AdminModel
+      AdminModel admin =
+          AdminModel.fromJson(adminDoc.data() as Map<String, dynamic>);
+
+      // إرجاع كائن المشرف
+      return admin;
+    } on Exception catch (e) {
+      print("getCurrentAdmin error is $e");
+      return null;
     }
-    // الحصول على مرجع المستند المطلوب استرجاعه
-    DocumentReference adminDocRef =
-        _firestore.collection('admins').doc(adminId);
-
-    // استرجاع المستند من Firestore
-    DocumentSnapshot adminDoc = await adminDocRef.get();
-
-    // التحقق من وجود المستند
-    if (!adminDoc.exists) {
-      throw Exception('المشرف غير موجود');
-    }
-
-    // تحويل البيانات إلى كائن AdminModel
-    AdminModel admin =
-        AdminModel.fromJson(adminDoc.data() as Map<String, dynamic>);
-
-    // إرجاع كائن المشرف
-    return admin;
   }
 
   Future<String> uploadAdminImage(html.File? imageFile, String userId) async {

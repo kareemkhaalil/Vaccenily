@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dashborad/bloc/admin/admin_cubit.dart';
 import 'package:dashborad/bloc/articles/articlest_cubit.dart';
+import 'package:dashborad/bloc/auth/auth_cubit.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/bloc/icons/icons_cubit.dart';
 import 'package:dashborad/bloc/tags/tags_cubit.dart';
 import 'package:dashborad/data/local/constans/appColors.dart';
 import 'package:dashborad/data/local/constans/appImages.dart';
 import 'package:dashborad/data/models/adminModel.dart';
+import 'package:dashborad/data/remote/fireAuth.dart';
 import 'package:dashborad/data/remote/repo.dart';
 import 'package:dashborad/presentation/screens/adminScreen.dart';
 
@@ -22,8 +24,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   final AdminCubit adminCubit;
+  final Auth fireAuth;
 
-  HomeScreen({Key? key, required this.adminCubit}) : super(key: key);
+  HomeScreen({Key? key, required this.adminCubit, required this.fireAuth})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,9 @@ class HomeScreen extends StatelessWidget {
 
     return MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (context) => AuthCubit(fireAuth, adminCubit),
+          ),
           BlocProvider(
             create: (context) => AdminCubit(repository),
           ),
@@ -51,6 +58,7 @@ class HomeScreen extends StatelessWidget {
               iconsCubit: context.read<IconsCubit>(),
               tagsCubit: context.read<TagsCubit>(),
               articlesCubit: context.read<ArticlesCubit>(),
+              authCubit: context.read<AuthCubit>(),
               uid: FirebaseAuth.instance.currentUser!.uid,
             ),
           ),
@@ -526,7 +534,7 @@ class HomeScreen extends StatelessWidget {
                             //logout
                             GestureDetector(
                               onTap: () {
-                                print('logout');
+                                cubit.authCubit.signOut(context);
                               },
                               child: Row(
                                 children: [

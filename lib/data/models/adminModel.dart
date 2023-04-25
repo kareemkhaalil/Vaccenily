@@ -4,14 +4,14 @@ part 'adminModel.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AdminModel {
-  final String? id;
-  final String? name;
-  final String? email;
-  final String? password;
-  final String? image;
-  final int? postsCount;
-  final int? tagsCount;
-  final int? iconssCount;
+  String? id;
+  String? name;
+  String? email;
+  String? password;
+  String? image;
+  int? postsCount;
+  int? tagsCount;
+  int? iconssCount;
 
   AdminModel(
       {this.id,

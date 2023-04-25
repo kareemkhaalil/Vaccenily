@@ -47,8 +47,14 @@ class Auth {
   }
 
 // تسجيل الخروج
+  // تسجيل الخروج
   Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+    try {
+      await _firebaseAuth.signOut();
+      await _hiveService.deleteUser();
+    } on FirebaseException catch (e) {
+      print(e);
+    }
   }
 
 // الحصول على المستخدم الحالي

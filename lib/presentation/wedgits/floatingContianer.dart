@@ -2,6 +2,7 @@
 
 import 'package:dashborad/bloc/admin/admin_cubit.dart';
 import 'package:dashborad/bloc/articles/articlest_cubit.dart';
+import 'package:dashborad/bloc/auth/auth_cubit.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/bloc/icons/icons_cubit.dart';
 import 'package:dashborad/bloc/tags/tags_cubit.dart';
@@ -21,6 +22,7 @@ class FloatingGlass extends StatelessWidget {
     var screenSize = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) => DashboardCubit(
+        authCubit: context.read<AuthCubit>(),
         adminCubit: context.read<AdminCubit>(),
         iconsCubit: context.read<IconsCubit>(),
         tagsCubit: context.read<TagsCubit>(),

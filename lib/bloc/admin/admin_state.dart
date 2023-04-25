@@ -9,6 +9,8 @@ class AdminUserAdding extends AdminState {}
 
 class AdminUserAdded extends AdminState {}
 
+class AdminUserSignUp extends AdminState {}
+
 class AdminUserImageUploading extends AdminState {}
 
 class AdminUserImageUploaded extends AdminState {}
@@ -65,4 +67,14 @@ class AdminsLoadFailed extends AdminState {
   final String error;
 
   AdminsLoadFailed(this.error);
+}
+
+class CreateUserLoading extends AdminState {}
+
+class CreateUserSuccess extends AdminState {}
+
+class CreateUserFailed extends AdminState {
+  final String error;
+
+  CreateUserFailed(this.error);
 }

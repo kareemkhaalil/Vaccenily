@@ -1,5 +1,6 @@
 import 'package:dashborad/bloc/admin/admin_cubit.dart';
 import 'package:dashborad/bloc/articles/articlest_cubit.dart';
+import 'package:dashborad/bloc/auth/auth_cubit.dart';
 import 'package:dashborad/bloc/blocObs.dart';
 import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/bloc/icons/icons_cubit.dart';
@@ -7,6 +8,7 @@ import 'package:dashborad/bloc/tags/tags_cubit.dart';
 import 'package:dashborad/data/local/constans/appColors.dart';
 import 'package:dashborad/data/local/hive/hiveServices.dart';
 import 'package:dashborad/data/models/userHiveModel.dart';
+import 'package:dashborad/data/remote/fireAuth.dart';
 import 'package:dashborad/data/remote/repo.dart';
 import 'package:dashborad/firebase_options.dart';
 import 'package:dashborad/presentation/screens/homeScreen.dart';
@@ -29,14 +31,16 @@ Future<void> main() async {
   Hive.registerAdapter<UserHive>(UserHiveAdapter());
   runApp(MyApp(
     adminCubit: AdminCubit(repository),
+    fireAuth: Auth(),
   ));
 }
 
 class MyApp extends StatelessWidget {
   final AdminCubit adminCubit;
+  final Auth fireAuth;
   final Repository _repository = Repository();
 
-  MyApp({super.key, required this.adminCubit});
+  MyApp({super.key, required this.adminCubit, required this.fireAuth});
 
   // This widget is the root of your application.
   @override
@@ -46,6 +50,9 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(fireAuth, adminCubit),
+        ),
         BlocProvider<AdminCubit>(
           create: (context) => AdminCubit(repository)..getAllUsers(),
         ),
@@ -60,6 +67,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<DashboardCubit>(
           create: (context) => DashboardCubit(
+            authCubit: context.read<AuthCubit>(),
             adminCubit: context.read<AdminCubit>(),
             iconsCubit: context.read<IconsCubit>(),
             tagsCubit: context.read<TagsCubit>(),
@@ -102,8 +110,9 @@ class MyApp extends StatelessWidget {
                   // إذا كانت هناك بيانات في Hive، قم بجلب بيانات المستخدم من Firestore
                   _repository.getCurrentAdmin(snapshot.data!.id!);
                   return HomeScreen(
-                      adminCubit:
-                          adminCubit); // عرض الصفحة الرئيسية للمستخدم المصادق
+                    adminCubit: adminCubit,
+                    fireAuth: fireAuth,
+                  ); // عرض الصفحة الرئيسية للمستخدم المصادق
                 } else {
                   return LoginScreen(); // عرض صفحة تسجيل الدخول
                 }

@@ -22,28 +22,50 @@ class AdminCubit extends Cubit<AdminState> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-
+  bool addAdminLoadind = false;
   Future createUser() async {
+    emit(CreateUserLoading());
     try {
+      print("add user to model ");
       AdminModel user = AdminModel(
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
         image: imageUrl,
       );
-      addUser(user);
+      print(nameController.text);
+      print(emailController.text);
+      print(passwordController.text);
+      await addUser(user);
+
+      nameController.clear();
+      emailController.clear();
+      passwordController.clear();
+      // مسح متغير imageUrl
+      imageUrl = null;
+      imageUrlStreamController.add(null);
+      emit(CreateUserSuccess());
     } on FirebaseException catch (e) {
-      print(e);
+      emit(
+        CreateUserFailed(
+          e.toString(),
+        ),
+      );
+      print(
+        e,
+      );
     }
   }
 
   Future<void> addUser(AdminModel user) async {
     emit(AdminUserAdding());
     try {
+      print("call addUser fun  ");
       await _repository.addAdmin(user);
       emit(AdminUserAdded());
     } catch (e) {
       emit(AdminUserAddFailed(e.toString()));
+      print(e);
     }
   }
 
@@ -72,6 +94,18 @@ class AdminCubit extends Cubit<AdminState> {
       return completer.future; // Return the Future
     } on FirebaseException catch (e) {
       print(e);
+    }
+  }
+
+  Future onAddAdminButtonPressed() async {
+    addAdminLoadind = true;
+
+    try {
+      await createUser();
+    } catch (e) {
+      // معالجة الاستثناءات هنا
+    } finally {
+      addAdminLoadind = false;
     }
   }
 
