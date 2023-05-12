@@ -40,7 +40,7 @@ class Auth {
         password: password,
       );
       return userCredential.user;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       // يمكنك التعامل مع الأخطاء هنا
       return null;
     }

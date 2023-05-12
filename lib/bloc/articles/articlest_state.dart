@@ -31,3 +31,11 @@ class ArticlesError extends ArticlesState {
 }
 
 class ArticlesActionSuccess extends ArticlesState {}
+
+class ArticleDropLoading extends ArticlesState {}
+
+class ArticleDropSuccess extends ArticlesState {}
+
+class ArticleDropFailure extends ArticlesState {}
+
+class ArticlesUpdated extends ArticlesState {}

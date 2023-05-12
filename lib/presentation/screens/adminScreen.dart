@@ -1,6 +1,6 @@
-import 'dart:convert';
 
 import 'package:dashborad/bloc/admin/admin_cubit.dart';
+import 'package:dashborad/bloc/dashboard_cubit.dart';
 import 'package:dashborad/data/remote/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,9 +14,9 @@ import 'package:dashborad/presentation/wedgits/glassmorphism_container.dart';
 
 class AdminScreen extends StatelessWidget {
   final dynamic state;
-  final dynamic cubit;
+  final dynamic dCubit;
 
-  AdminScreen({required this.state, required this.cubit, Key? key})
+  AdminScreen({required this.state, required this.dCubit, Key? key})
       : super(key: key);
 
   @override
@@ -32,6 +32,7 @@ class AdminScreen extends StatelessWidget {
         listener: (context, adminState) {},
         builder: (context, adminState) {
           final adminCubit = context.read<AdminCubit>();
+          final cubit = context.read<DashboardCubit>();
           return adminCubit.addAdminLoadind == true
               ? GlassmorphismContainer(
                   height: screenSize.height * 0.97,
@@ -50,6 +51,7 @@ class AdminScreen extends StatelessWidget {
               : Stack(
                   alignment: Alignment.center,
                   children: [
+                    /// All Admins Button
                     AnimatedOpacity(
                       opacity: cubit.adminButtonOpacity!,
                       duration: const Duration(milliseconds: 500),
@@ -156,6 +158,7 @@ class AdminScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     Stack(
                       alignment: Alignment.center,
                       children: [
